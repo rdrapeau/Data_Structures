@@ -129,6 +129,77 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 	
 	/**
+	 * Returns whether or not the subtree contains the element.
+	 * 
+	 * @param element - The element to search for
+	 * @return True if the element is in the tree and false otherwise
+	 */
+	public boolean contains(E element) {
+		return contains(element, root);
+	}
+	
+	/**
+	 * Returns whether or not the subtree contains the element.
+	 * 
+	 * @param element - The element to search for
+	 * @param root - The root of the subtree
+	 * @return True if the element is in the subtree and false otherwise
+	 */
+	private boolean contains(E element, Node root) {
+		if (root != null) {
+			if (element == root.element) {
+				return true;
+			}
+			int match = element.compareTo(root.element);
+			if (match < 1) {
+				return contains(element, root.left);
+			} else {
+				return contains(element, root.right);
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns whether or not the node is a child of the subtree.
+	 * 
+	 * @param node - The child
+	 * @param root - The parent
+	 * @return True if the node is a child of the root and false otherwise
+	 */
+	private boolean isChild(Node node, Node root) {
+		if (root != null) {
+			if (node == root) {
+				return true;
+			}
+			int match = node.element.compareTo(root.element);
+			if (match < 1) {
+				return isChild(node, root.left);
+			} else {
+				return isChild(node, root.right);
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns the highest common ancestor Node between two Nodes.
+	 * 
+	 * @param nodeOne - The first Node
+	 * @param nodeTwo - The second Node
+	 * @param root - The root of the tree to check
+	 * @return The first common ancestor between the two Nodes (null if none are found)
+	 */
+	private Node commonAncestor(Node nodeOne, Node nodeTwo, Node root) {
+		if (isChild(nodeOne, root.left) && isChild(nodeTwo, root.left)) {
+			return commonAncestor(nodeOne, nodeTwo, root.left);
+		} else if (isChild(nodeOne, root.right) && isChild(nodeOne, root.right)) {
+			return commonAncestor(nodeOne, nodeTwo, root.right);
+		}
+		return root;
+	}
+	
+	/**
 	 * Returns the element that comes immediately before the element in the tree.
 	 * 
 	 * @param element - The successor to the predecessor
