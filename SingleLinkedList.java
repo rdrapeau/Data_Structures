@@ -1,7 +1,11 @@
 package Cracking_The_Coding_Interview;
 
-import Sorting.Node;
-
+/**
+ * Implementation of the SinglyLinkedList data structure.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class SingleLinkedList<E extends Comparable<E>> {
 	/**
 	 * The front of the list.
@@ -19,7 +23,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	private int size;
 	
 	/**
-	 * Returns the size of the list.
+	 * Returns the number of elements in the list.
 	 * 
 	 * @return The size of the list
 	 */
@@ -37,7 +41,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	}
 	
 	/**
-	 * Adds the data as a new Node at the input index (0 based)
+	 * Adds the data as a new Node at the input index (0 based).
 	 * 
 	 * @param data - The data for the new Node to contain
 	 * @param index - The index to add the new Node at (0 based)
@@ -229,9 +233,6 @@ public class SingleLinkedList<E extends Comparable<E>> {
 		}
 	}
 	
-	/**
-	 * Returns a String that represents the entire list.
-	 */
 	public String toString() {
 		String result = "[";
 		if (head != null) {
@@ -251,7 +252,7 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	 * Removes duplicates in the list.
 	 */
 	public void removeDuplicates() {
-		Node current = head;;
+		Node current = head;
 		Node sec = head;
 		while (current != null) {
 			while (sec.next != null) {
@@ -373,6 +374,10 @@ public class SingleLinkedList<E extends Comparable<E>> {
 		head = prev;
 	}
 	
+	/**
+	 * Represents a single Node in the SinglyLinkedList.
+	 * @author RDrapeau
+	 */
 	public class Node {
 		/**
 		 * Data of the Node.

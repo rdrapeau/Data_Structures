@@ -1,5 +1,11 @@
 package Cracking_The_Coding_Interview;
 
+/**
+ * Implementation of the Queue data structure using a Linked List to store the elements.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class QueueLinkedList<E> {
 	/**
 	 * The front of the Queue.
@@ -57,7 +63,9 @@ public class QueueLinkedList<E> {
 		}
 		E element = head.data;
 		head = head.next;
-		tail = head == null ? null : tail; // Adjust tail if the list is null
+		if (head == null) {
+			tail = null;
+		}
 		size--;
 		return element;
 	}
@@ -71,9 +79,6 @@ public class QueueLinkedList<E> {
 		return size;
 	}
 	
-	/**
-	 * Returns a String representing the Queue.
-	 */
 	public String toString() {
 		String result = "[" + (head != null ? head.data : "");
 		Node current = head != null ? head.next : null;
@@ -84,10 +89,26 @@ public class QueueLinkedList<E> {
 		return result + "]";
 	}
 	
+	/**
+	 * Represents a Node in the Queue.
+	 * @author RDrapeau
+	 */
 	private class Node {
+		/**
+		 * The data of this Node.
+		 */
 		private E data;
+		
+		/**
+		 * The next Node after this one.
+		 */
 		private Node next;
 		
+		/**
+		 * Constructs a new Node with no Nodes immediately after this one.
+		 * 
+		 * @param data - The data of this Node
+		 */
 		public Node(E data) {
 			this.data = data;
 		}

@@ -163,9 +163,6 @@ public class DoubleLinkedList<E extends Comparable> {
 		return size;
 	}
 	
-	/**
-	 * Returns a String of the list.
-	 */
 	public String toString() {
 		String result = "[" + (head == null ? "" : head.data);
 		Node current = head == null ? null : head.next;

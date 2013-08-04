@@ -1,77 +1,148 @@
 package Cracking_The_Coding_Interview;
 
+/**
+ * Implementation of the DoubleStack data structure. This object uses only 1 array to represent
+ * two Stacks.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class DoubleStack<E> {
+	/**
+	 * Initial capacity of the array.
+	 */
+	private static final int DEFAULT_CAPACITY = 4;
+	
+	/**
+	 * The elements of both Stacks.
+	 */
 	private Object[] elements;
-	private int size1;
-	private int size2;
 	
+	/**
+	 * The number of elements in Stack 1.
+	 */
+	private int sizeOne;
+	
+	/**
+	 * The number of elements in Stack 2.
+	 */
+	private int sizeTwo;
+	
+	/**
+	 * Constructs a new DoubleStack of DEFAULT_CAPACITY.
+	 */
 	public DoubleStack() {
-		this.elements = new Object[4];
+		this.elements = new Object[DEFAULT_CAPACITY];
 	}
 	
-	public void push1(E element) {
-		if (size1 + size2 == elements.length) {
+	/**
+	 * Pushes an element onto the first Stack.
+	 * 
+	 * @param element - The element to add to the first Stack
+	 */
+	public void pushOntoStackOne(E element) {
+		if (sizeOne + sizeTwo == elements.length) {
 			setSize(elements.length * 2);
 		}
-		elements[size1++] = element;
+		elements[sizeOne++] = element;
 	}
 	
-	public void push2(E element) {
-		if (size1 + size2 == elements.length) {
+	/**
+	 * Pushes an element onto the second Stack.
+	 * 
+	 * @param element - The element to add to the second Stack
+	 */
+	public void pushOntoStackTwo(E element) {
+		if (sizeOne + sizeTwo == elements.length) {
 			setSize(elements.length * 2);
 		}
-		elements[elements.length - 1 - size2++] = element;
+		elements[elements.length - 1 - sizeTwo++] = element;
 	}
 	
-	public E peek1() {
-		if (size1 == 0) {
+	/**
+	 * Returns the element on the top of the first Stack.
+	 * 
+	 * @throws IllegalStateException if the first Stack is empty
+	 * @return The top element on the first Stack
+	 */
+	public E peekFromStackOne() {
+		if (sizeOne == 0) {
 			throw new IllegalStateException();
 		}
-		return (E) elements[size1 - 1];
+		return (E) elements[sizeOne - 1];
 	}
 	
-	public E peek2() {
-		if (size2 == 0) {
+	/**
+	 * Returns the element on the top of the second Stack.
+	 * 
+	 * @throws IllegalStateException if the second Stack is empty
+	 * @return The top element on the second Stack
+	 */
+	public E peekFromStackTwo() {
+		if (sizeTwo == 0) {
 			throw new IllegalStateException();
 		}
-		return (E) elements[elements.length - size2];
+		return (E) elements[elements.length - sizeTwo];
 	}
 	
-	public E pop1() {
-		if (size1 == 0) {
+	/**
+	 * Returns and removes the top element on the first Stack.
+	 * 
+	 * @throws IllegalStateException if the first Stack is empty
+	 * @return The top element on the first Stack
+	 */
+	public E popFromStackOne() {
+		if (sizeOne == 0) {
 			throw new IllegalStateException();
 		}
-		E element = (E) elements[--size1];
-		if (size1 + size2 < elements.length / 3) {
-			setSize((size1 + size2) * 2);
+		E element = (E) elements[--sizeOne];
+		if (sizeOne + sizeTwo < elements.length / 3) {
+			setSize((sizeOne + sizeTwo) * 2);
 		}
 		return element;
 	}
 	
-	public E pop2() {
-		if (size2 == 0) {
+	/**
+	 * Returns and removes the top element on the second Stack.
+	 * 
+	 * @throws IllegalStateException if the second Stack is empty
+	 * @return The top element on the second Stack
+	 */
+	public E popFromStackTwo() {
+		if (sizeTwo == 0) {
 			throw new IllegalStateException();
 		}
-		E element = (E) elements[elements.length - size2--];
-		if (size1 + size2 < elements.length / 3) {
-			setSize((size1 + size2) * 2);
+		E element = (E) elements[elements.length - sizeTwo--];
+		if (sizeOne + sizeTwo < elements.length / 3) {
+			setSize((sizeOne + sizeTwo) * 2);
 		}
 		return element;
 	}
 	
+	/**
+	 * Sets the size of the elements array to be the new length. Copies over all elements from
+	 * the previous array into the new one. 
+	 * 
+	 * @param length - The new length of the array
+	 */
 	private void setSize(int length) {
 		Object[] newElements = new Object[length];
-		for (int i = 0; i < size1; i++) {
+		for (int i = 0; i < sizeOne; i++) {
 			newElements[i] = elements[i];
 		}
 		int index = newElements.length - 1;
-		for (int i = elements.length - 1; i >= elements.length - size2; i--) { 
+		for (int i = elements.length - 1; i >= elements.length - sizeTwo; i--) { 
 			newElements[index--] = elements[i];
 		}
 		elements = newElements;
 	}
 	
-	public int size() {
-		return size1 + size2;
+	/**
+	 * Returns the number of elements in both of the Stacks.
+	 * 
+	 * @return The number of elements in both of the Stack
+	 */
+	public int totalSize() {
+		return sizeOne + sizeTwo;
 	}
 }

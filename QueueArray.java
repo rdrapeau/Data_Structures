@@ -1,13 +1,24 @@
 package Cracking_The_Coding_Interview;
 
+/**
+ * Implementation of the Queue data structure using an Array to store the elements.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class QueueArray<E> {
+	/**
+	 * The default capacity of the Queue.
+	 */
+	private static final int DEFAULT_CAPACITY = 10;
+	
 	/**
 	 * The elements of queue.
 	 */
 	private Object[] elements;
 	
 	/**
-	 * The size of the queue.
+	 * The number of elements in the queue.
 	 */
 	private int size;
 	
@@ -20,7 +31,7 @@ public class QueueArray<E> {
 	 * Constructs a new Queue with a default size of 2.
 	 */
 	public QueueArray() {
-		elements = new Object[10];
+		elements = new Object[DEFAULT_CAPACITY];
 	}
 	
 	/**
@@ -82,7 +93,7 @@ public class QueueArray<E> {
 	}
 	
 	/**
-	 * Returns the size of the Queue.
+	 * Returns the number of elements in the Queue.
 	 * 
 	 * @return The size of the Queue
 	 */
@@ -90,9 +101,6 @@ public class QueueArray<E> {
 		return size;
 	}
 	
-	/**
-	 * Returns a String representing the Queue.
-	 */
 	public String toString() {
 		String result = "[" + (size != 0 ? elements[front] : "");
 		for (int i = front + 1; i < size + front; i++) {

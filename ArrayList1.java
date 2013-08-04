@@ -232,9 +232,6 @@ public class ArrayList1<E extends Comparable> {
 		return this.size;
 	}
 	
-	/**
-	 * Returns a String representing the entire array.
-	 */
 	public String toString() {
 		String result = "[" + (size > 0 ? elements[0] : "");
 		for (int i = 1; i < size; i++) {
