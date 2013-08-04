@@ -5,6 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Implementation of the BinarySearchTree data structure.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class BinarySearchTree<E extends Comparable> {
 	/**
 	 * The overall root of the tree.
@@ -331,6 +337,19 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 	
 	/**
+	 * Prints the tree out level by level to standard out.
+	 */
+	public void printByLevel() {
+		List<List<E>> elements = listByLevel();
+		for (List<E> level : elements) {
+			for (E node : level) {
+				System.out.print(node + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	/**
 	 * Performs an in-order traversal of the tree printing out each element
 	 */
 	public void inOrder() {
@@ -429,17 +448,55 @@ public class BinarySearchTree<E extends Comparable> {
 		return count;
 	}
 	
+	/**
+	 * This represents a Node in the tree.
+	 * @author RDrapeau
+	 */
 	private class Node {
+		/**
+		 * The parent of this Node.
+		 */
 		private Node parent;
+		
+		/**
+		 * The left child of this Node.
+		 */
 		private Node left;
+		
+		/**
+		 * The right child of this Node.
+		 */
 		private Node right;
+		
+		/**
+		 * The size of the subtree with the root as this node. (size = size(left) + size(right) + 1)
+		 */
 		private int size;
+		
+		/**
+		 * The data element stored at this node.
+		 */
 		private E element;
 		
+		/**
+		 * Constructs a new default Node with element as data and parent as the parent.
+		 * 
+		 * @param element - The data of the Node
+		 * @param parent - Node's parent
+		 */
 		public Node(E element, Node parent) {
 			this(element, parent, null, null, 1);
 		}
 		
+		/**
+		 * Constructs a new Node.
+		 * 
+		 * @param element - The data of the Node
+		 * @param parent - Node's parent
+		 * @param left - Left child
+		 * @param right - Right child
+		 * @param size - Size of the node
+		 */
 		public Node (E element, Node parent, Node left, Node right, int size) {
 			this.element = element;
 			this.parent = parent;

@@ -2,6 +2,10 @@ package Cracking_The_Coding_Interview;
 
 import java.util.Arrays;
 
+/**
+ * Random practice from chapter 1 of Cracking the Coding Interview.
+ * @author RDrapeau
+ */
 public class Chapter1 {
 
 	/**

@@ -3,6 +3,12 @@ package Cracking_The_Coding_Interview;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Implementation of the ArrayList data structure.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class ArrayList1<E extends Comparable> {
 	/**
 	 * The default capacity of the ArrayList.
@@ -57,7 +63,7 @@ public class ArrayList1<E extends Comparable> {
 	 * 
 	 * @param index - Index to add the element at
 	 * @param data - The element to add
-	 * @throws IllegalArgumentException index is invalid
+	 * @throws IllegalArgumentException if index is invalid
 	 */
 	public void add(int index, E data) {
 		if (index < 0 || index > size) {
@@ -77,7 +83,7 @@ public class ArrayList1<E extends Comparable> {
 	 * Removes and returns the data at the specified index.
 	 * 
 	 * @param index - The index of the element to remove
-	 * @throws IllegalArgumentException if the index is invalid
+	 * @throws IllegalArgumentException if index is invalid
 	 * @return The element removed from the list
 	 */
 	public E remove(int index) {

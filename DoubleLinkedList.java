@@ -1,5 +1,11 @@
 package Cracking_The_Coding_Interview;
 
+/**
+ * Implementation of the DoublyLinkedList data structure.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class DoubleLinkedList<E extends Comparable> {
 	/**
 	 * The first node in the list.
@@ -12,7 +18,7 @@ public class DoubleLinkedList<E extends Comparable> {
 	private Node tail;
 	
 	/**
-	 * The size of the list.
+	 * The number of elements in the list.
 	 */
 	private int size;
 	
@@ -36,32 +42,32 @@ public class DoubleLinkedList<E extends Comparable> {
 		if (index < 0 || index > size) {
 			throw new IllegalArgumentException();
 		}
-		Node insert = new Node(data);
+		Node newNode = new Node(data);
 		if (index <= size / 2) { // Contains empty front case
 			if (index == 0) { // Index is 0
-				insert.next = head;
-				head = insert;
+				newNode.next = head;
+				head = newNode;
 				if (tail == null) {
-					tail = insert;
+					tail = newNode;
 				}
 			} else {
 				Node current = head;
 				for (int i = 0; i < index; i++) {
 					current = current.next;
 				}
-				insert(insert, current);
+				insert(newNode, current);
 			}
 		} else { 
 			if (index == size) {
-				tail.next = insert;
-				insert.previous = tail;
-				tail = insert;
+				tail.next = newNode;
+				newNode.previous = tail;
+				tail = newNode;
 			} else {
 				Node current = tail;
 				for (int i = size - 1; i > index; i--) {
 					current = current.previous;
 				}
-				insert(insert, current);
+				insert(newNode, current);
 			}
 		}
 		size++;
@@ -170,28 +176,45 @@ public class DoubleLinkedList<E extends Comparable> {
 		return result + "]";
 	}
 	
-	
+	/**
+	 * This represents a single Node in the DoublyLinkedList
+	 * @author RDrapeau
+	 */
 	private class Node {
+		/**
+		 * The Node immediately after this Node.
+		 */
 		private Node next;
+		
+		/**
+		 * The Node immediately before this Node.
+		 */
 		private Node previous;
+		
+		/**
+		 * The data of this Node.
+		 */
 		private E data;
 		
+		/**
+		 * Constructs a new Node with no Nodes connected to it.
+		 * @param data
+		 */
 		public Node(E data) {
 			this(data, null, null);
 		}
 		
+		/**
+		 * Constructs a new Node in between next and previous.
+		 * 
+		 * @param data - The data of the Node
+		 * @param next - The node after this one
+		 * @param previous - The node before this one
+		 */
 		public Node(E data, Node next, Node previous) {
 			this.data = data;
 			this.next = next;
 			this.previous = previous;
 		}
-	}
-	
-	public static void main(String[] args) {
-		DoubleLinkedList<Integer> list = new DoubleLinkedList<Integer>();
-		for (int i = 1; i <= 5; i++) {
-			list.add(i);
-		}
-		System.out.println(list + " : " + list.size());
 	}
 }
