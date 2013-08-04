@@ -495,6 +495,54 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 	
 	/**
+	 * Returns whether or not other is a subtree of tree.
+	 * 
+	 * @param tree - The main tree
+	 * @param other - The subtree
+	 * @return True if other is a subtree of tree and false otherwise
+	 */
+	public boolean isSubtree(BinarySearchTree tree, BinarySearchTree other) {
+		return isSubtree((Node) tree.root, (Node) other.root);
+	}
+	
+	/**
+	 * Returns whether or not other is a subtree of root.
+	 * 
+	 * @param root - The root of the main tree
+	 * @param other - The root of the subtree
+	 * @return True if other is a subtree of root and false otherwise
+	 */
+	private boolean isSubtree(Node root, Node other) {
+		if (other == null) { // Empty subtree
+			return true;
+		} else if (root == null) { // Reached the end of the main tree
+			return false;
+		} else if (root.element == other.element && match(root, other)) { // Roots match and subtrees match
+			return true;
+		} else if (other.element.compareTo(root.element) < 1) { // Subtree is on the left of the root
+			return isSubtree(root.left, other);
+		} else { // Subtree is on the right of the root
+			return isSubtree(root.right, other);
+		}
+	}
+	
+	/**
+	 * Returns whether or not the two subtrees are equal to each other (store the same data).
+	 * 
+	 * @param root - The root of the first subtree
+	 * @param other - The root of the second subtree
+	 * @return True if the trees are equal and false otherwise
+	 */
+	private boolean match(Node root, Node other) {
+		if (root == null && other == null) {
+			return true;
+		} else if (root == null || other == null) {
+			return false;
+		}
+		return root.element == other.element && match(root.left, other.left) && match(root.right, other.right);
+	}
+	
+	/**
 	 * Performs an in-order traversal of the tree printing out each element
 	 */
 	public void inOrder() {
