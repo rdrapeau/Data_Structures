@@ -17,3 +17,6 @@ Implemented:
 * DoubleStack - two stacks using one basic array
 * TopplingStack - a new stack is created once the previous gets too high
 * BinarySearchTree
+* Graph - using an adjacency list
+*   Vertex
+*   Edge
