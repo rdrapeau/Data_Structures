@@ -461,6 +461,40 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 	
 	/**
+	 * Prints out the paths in the tree that add up to the sum. Paths can start from any node in
+	 * in the tree.
+	 * 
+	 * @param sum - The target sum
+	 */
+	public void pathSums(int sum) {
+		pathSums(root, sum, 0, "", false);
+	}
+	
+	/**
+	 * Prints out the paths in the tree that add up to the sum.
+	 * 
+	 * @param root - The overall root of the subtree
+	 * @param sum - The target sum
+	 * @param soFar - The current sum
+	 * @param nodes - The path so far
+	 * @param reset - Boolean representing if the path can start over or not at the current root
+	 */
+	private void pathSums(Node root, int sum, int soFar, String nodes, boolean reset) {
+		if (soFar < sum && root != null) {
+			if (soFar + (Integer) root.element == sum) {
+				System.out.println(nodes + root.element);
+			} else {
+				pathSums(root.left, sum, soFar + (Integer) root.element, nodes + root.element + " ", true);
+				pathSums(root.right, sum, soFar + (Integer) root.element, nodes + root.element + " ", true);
+			}
+			if (!reset) {
+				pathSums(root.left, sum, 0, "", false);
+				pathSums(root.right, sum, 0, "", false);
+			}
+		}
+	}
+	
+	/**
 	 * Performs an in-order traversal of the tree printing out each element
 	 */
 	public void inOrder() {
