@@ -1,6 +1,7 @@
 package Cracking_The_Coding_Interview;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -16,6 +17,45 @@ public class BinarySearchTree<E extends Comparable> {
 	 * The overall root of the tree.
 	 */
 	private Node root;
+	
+	/**
+	 * Overloads the second constructor so the default constructor can be used.
+	 */
+	public BinarySearchTree() {
+		// Overload the second constructor
+	}
+	
+	/**
+	 * Constructs a new BinarySearchTree over the Comparable Array.
+	 * 
+	 * @param a - The array of elements to create the tree out of. This array will be sorted.
+	 */
+	public BinarySearchTree(Comparable[] a) {
+		Arrays.sort(a);
+		root = createTree(a, 0, a.length, null);
+	}
+	
+	/**
+	 * Creates a perfectly balanced binary tree from the elements in a. The median element is 
+	 * recursively chosen as the root to build the tree.
+	 * 
+	 * @param a - The array of elements to build the tree
+	 * @param min - The minimum index to use (inclusive)
+	 * @param max - The maximum index to use (exclusive)
+	 * @param parent - The parent of the Node to be made
+	 * @return The overall root of the subtree 
+	 */
+	private Node createTree(Comparable[] a, int min, int max, Node parent) {
+		Node root = null;
+		if (min < max) {
+			int middle = (max + min) / 2;
+			root = new Node((E) a[middle], parent);
+			root.left = createTree(a, min, middle, root);
+			root.right = createTree(a, middle + 1, max, root);
+			root.size = (root.left == null ? 0 : root.left.size) + (root.right == null ? 0 : root.right.size) + 1;
+		}
+		return root;
+	}
 	
 	/**
 	 * Adds the element into the Binary Search Tree.
