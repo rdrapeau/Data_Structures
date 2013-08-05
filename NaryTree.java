@@ -12,19 +12,47 @@ import java.util.Random;
  * @param <E>
  */
 public class NaryTree<E> {
+	/**
+	 * The number of children a Node can have.
+	 */
 	private int n;
+	
+	/**
+	 * The overall root of the tree
+	 */
 	private Node root;
+	
+	/**
+	 * Random object used to determine where to place new Nodes.
+	 */
 	private Random rand;
 	
+	/**
+	 * Constructs a new N-Ary Tree.
+	 * 
+	 * @param n - The number of children a Node can have
+	 */
 	public NaryTree(int n) {
 		this.n = n;
 		rand = new Random();
 	}
 	
+	/**
+	 * Adds an element into the tree.
+	 * 
+	 * @param element - The element to add
+	 */
 	public void add(E element) {
 		root = add(element, root);
 	}
 	
+	/**
+	 * Adds an element into the tree.
+	 * 
+	 * @param element - The element to add
+	 * @param root - The root of the subtree
+	 * @return The root of the subtree with the new Node added
+	 */
 	private Node add(E element, Node root) {
 		if (root == null) {
 			root = new Node(element);
@@ -38,6 +66,12 @@ public class NaryTree<E> {
 		return root;
 	}
 	
+	/**
+	 * Returns whether or not the tree contains the element using BFS or DFS (for practice)
+	 * 
+	 * @param element - The element to search for
+	 * @return True if the element is in the tree and false otherwise
+	 */
 	public boolean contains(E element) {
 		if (rand.nextBoolean()) { // Just for practice of BFS and DFS
 			return BFS(element, root) != null;
@@ -45,10 +79,22 @@ public class NaryTree<E> {
 		return DFS(element, root) != null;
 	}
 	
+	/**
+	 * Removes the element from the tree.
+	 * 
+	 * @param element - The element to remove
+	 */
 	public void remove(E element) {
 		root = remove(element, root);
 	}
 	
+	/**
+	 * Removes the element from the subtree at root. 
+	 * 
+	 * @param element - The element to remove
+	 * @param root - The root of the subtree
+	 * @return The root of the subtree with all occurrences of element removed
+	 */
 	private Node remove(E element, Node root) {
 		if (root != null) {
 			if (element == root.element) {
@@ -73,6 +119,12 @@ public class NaryTree<E> {
 		return root;
 	}
 	
+	/**
+	 * Returns the farthest right leaf node of the subtree.
+	 * 
+	 * @param root - The root of the subtree
+	 * @return The leaf Node on the far right of the subtree (null if none)
+	 */
 	private Node getLeaf(Node root) {
 		if (root != null) {
 			if (root.numberOfChildren == 0) {
@@ -84,6 +136,13 @@ public class NaryTree<E> {
 		return null;
 	}
 	
+	/**
+	 * Performs a Breadth-First-Search on the subtree looking for the element.
+	 * 
+	 * @param element - The element to search for
+	 * @param root - The root of the subtree
+	 * @return The Node containing the element
+	 */
 	private Node BFS(E element, Node root) {
 		Queue<Node> q = new LinkedList<Node>();
 		q.add(root);
@@ -99,6 +158,13 @@ public class NaryTree<E> {
 		return null;
 	}
 	
+	/**
+	 * Performs a Depth-First-Search on the subtree looking for the element.
+	 * 
+	 * @param element - The element to search for
+	 * @param root - The root of the subtree
+	 * @return The Node containing the element
+	 */
 	private Node DFS(E element, Node root) {
 		if (root != null) {
 			if (element == root.element) {
@@ -114,20 +180,56 @@ public class NaryTree<E> {
 		return null;
 	}
 	
+	/**
+	 * Represents a single Node in the tree.
+	 * @author RDrapeau
+	 */
 	private class Node {
+		/**
+		 * The children of this Node.
+		 */
 		private Object[] children;
+		
+		/**
+		 * The data of this Node.
+		 */
 		private E element;
+		
+		/**
+		 * The number of immediate children this Node has.
+		 */
 		private int numberOfChildren;
 		
+		/**
+		 * Constructs a new Node with element as the data.
+		 * 
+		 * @param element - The data of the element
+		 */
 		public Node(E element) {
 			this.children = new Object[n];
 			this.element = element;
 		}
 		
+		/**
+		 * Returns the child Node at a specific index.
+		 * 
+		 * @param index - The index of the child Node
+		 * @throws IllegalStateException if the index is invalid
+		 * @return The child Node at the index
+		 */
 		public Node childAt(int index) {
+			if (index < 0 || index >= numberOfChildren) {
+				throw new IllegalStateException();
+			}
 			return (Node) this.children[index];
 		}
 		
+		/**
+		 * Adds a new Node as the child of this one.
+		 * 
+		 * @param element - The element of the child Node to be added
+		 * @throws IllegalStateException if the array of children Nodes is already full 
+		 */
 		public void addChild(E element) {
 			if (numberOfChildren == children.length) {
 				throw new IllegalStateException();
