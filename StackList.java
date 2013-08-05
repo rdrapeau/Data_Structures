@@ -3,6 +3,14 @@ package Cracking_The_Coding_Interview;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the ToplingStack data structure. Any time a Stack gets too high, a new one is 
+ * formed.
+ * 
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class StackList<E extends Comparable> {
 	/**
 	 * The maximum number of elements allowed per stack.

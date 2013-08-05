@@ -1,5 +1,11 @@
 package Cracking_The_Coding_Interview;
 
+/**
+ * Implementation of the Stack data structure using an Array to store the elements.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class StackArray<E> {
 	/**
 	 * The initial capacity of the Stack.
@@ -94,9 +100,6 @@ public class StackArray<E> {
 		return size;
 	}
 	
-	/**
-	 * Returns a String representation of the Stack.
-	 */
 	public String toString() {
 		String result = "[" + (size != 0 ? elements[0] : "");
 		for (int i = 1; i < size; i++) {

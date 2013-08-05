@@ -1,5 +1,11 @@
 package Cracking_The_Coding_Interview;
 
+/**
+ * Implementation of the Stack data structure using a linked list to store the elements.
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class StackLinkedList<E extends Comparable> {
 	/**
 	 * The top of the Stack.
@@ -82,9 +88,6 @@ public class StackLinkedList<E extends Comparable> {
 		return size;
 	}
 	
-	/**
-	 * Returns a String representing the Stack.
-	 */
 	public String toString() {
 		String result = "[" + (size != 0 ? top.data : "");
 		Node current = top != null ? top.next : null;
@@ -95,14 +98,37 @@ public class StackLinkedList<E extends Comparable> {
 		return result + "]";
 	}
 	
+	/**
+	 * Represents one Node on the Stack.
+	 * @author RDrapeau
+	 *
+	 */
 	private class Node {
+		/**
+		 * The next element below this element.
+		 */
 		private Node next;
+		
+		/**
+		 * The data of the Node.
+		 */
 		private E data;
 		
+		/**
+		 * Constructs a new Node with nothing below it.
+		 * 
+		 * @param data - The data of the Node
+		 */
 		public Node(E data) {
 			this(data, null);
 		}
 		
+		/**
+		 * Constructs a new Node with another Node below it.
+		 * 
+		 * @param data - The data of the Node
+		 * @param next - The Node below this one
+		 */
 		public Node(E data, Node next) {
 			this.data = data;
 			this.next = next;
