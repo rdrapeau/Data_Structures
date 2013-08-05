@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Random;
 
 /**
- * Implementation of the N-ary Tree data structure.
+ * Implementation of the N-ary Tree data structure also known as a K-Tree.
  * @author RDrapeau
  *
  * @param <E>
