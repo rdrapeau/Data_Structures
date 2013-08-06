@@ -1,7 +1,7 @@
 package Cracking_The_Coding_Interview;
 
 /**
- * Implementation of the Heap(Min) data structure.
+ * Implementation of the Heap data structure.
  * @author RDrapeau
  *
  * @param <E>
@@ -13,16 +13,24 @@ public class Heap<E extends Comparable> {
 	private Object[] elements;
 	
 	/**
+	 * True if the Heap returns the minimum and false if it returns the maximum.
+	 */
+	private boolean isMinHeap;
+	
+	/**
 	 * Number of elements in the Heap.
 	 */
 	private int size;
 	
 	/**
 	 * Constructs a new heap of the input size.
-	 * @param size
+	 * 
+	 * @param size - The number of elements in the heap
+	 * @param isMinHeap - True if the Heap will return the minimum and false otherwise
 	 */
-	public Heap(int size) {
+	public Heap(int size, boolean isMinHeap) {
 		this.elements = new Object[size];
+		this.isMinHeap = isMinHeap;
 	}
 	
 	/**
@@ -38,7 +46,9 @@ public class Heap<E extends Comparable> {
 		int index = size++;
 		elements[index] = element;
 		int parent = getParentIndex(index);
-		while (index != 0 && ((E) elements[index]).compareTo((E) elements[parent]) < 0) { // Bubble Up
+		while (index != 0 
+				&& ((isMinHeap && ((E) elements[index]).compareTo((E) elements[parent]) < 0)
+						|| (!isMinHeap && ((E) elements[index]).compareTo((E) elements[parent]) > 0))) { // Bubble Up
 			swap(index, parent);
 			index = parent;
 			parent = getParentIndex(index);
@@ -46,12 +56,12 @@ public class Heap<E extends Comparable> {
 	}
 	
 	/**
-	 * Removes and returns the smallest element in the Heap.
+	 * Removes and returns the smallest or biggest element in the Heap.
 	 * 
 	 * @throws IllegalStateException if the Heap is empty
-	 * @return The smallest element in the Heap
+	 * @return The smallest or biggest element in the Heap
 	 */
-	public E extractMin() {
+	public E extract() {
 		if (size == 0) {
 			throw new IllegalStateException();
 		}
@@ -59,13 +69,28 @@ public class Heap<E extends Comparable> {
 		elements[0] = elements[--size];
 		elements[size] = null;
 		int index = 0;
-		int child = getIndexOfSmallerChild(index);
-		while (child < size && ((E) elements[index]).compareTo((E) elements[child]) > 0) { // Bubble down
+		int child = getIndexOfChild(index);
+		while (child < size 
+				&& ((isMinHeap && ((E) elements[index]).compareTo((E) elements[child]) > 0)
+						|| (!isMinHeap && ((E) elements[index]).compareTo((E) elements[child]) < 0))) { // Bubble down
 			swap(index, child);
 			index = child;
-			child = getIndexOfSmallerChild(index);
+			child = getIndexOfChild(index);
 		}
 		return root;
+	}
+	
+	/**
+	 * Returns the minimum or maximum element in the Heap.
+	 * 
+	 * @throws IllegalStateException if the Heap is empty
+	 * @return The smallest element
+	 */
+	public E peek() {
+		if (size == 0) {
+			throw new IllegalStateException();
+		}
+		return (E) elements[0];
 	}
 	
 	/**
@@ -94,19 +119,21 @@ public class Heap<E extends Comparable> {
 	}
 	
 	/**
-	 * Returns the index of the smaller child of the parent at the input index.
+	 * Returns the index of the smaller or bigger child of the parent at the input index.
 	 * 
 	 * @param index - The index of the parent
-	 * @return The index of the smaller child of the parent. If the parent does not have any children
+	 * @return The index of the smaller or bigger child of the parent. If the parent does not have any children
 	 * then size + 1 is returned.
 	 */
-	private int getIndexOfSmallerChild(int index) {
+	private int getIndexOfChild(int index) {
 		int first = getFirstChildIndex(index);
 		int second = getSecondChildIndex(index);
 		if (first >= size || second >= size || (elements[first] == null && elements[second] == null)) { // Fail safe
 			return size + 1;
 		}
-		if (elements[first] == null || (elements[second] != null && ((E) elements[second]).compareTo((E) elements[first]) < 0)) {
+		if (elements[first] == null || (elements[second] != null 
+				&& ((isMinHeap && ((E) elements[first]).compareTo((E) elements[second]) > 0)
+						|| (!isMinHeap && ((E) elements[first]).compareTo((E) elements[second]) < 0)))) {
 			return second;
 		} else {
 			return first;
