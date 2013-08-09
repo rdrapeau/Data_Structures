@@ -17,6 +17,7 @@ Implemented:
 * DoubleStack - two stacks using one basic array
 * TopplingStack - a new stack is created once the previous gets too high
 * BinarySearchTree
+* K-Tree - also known as a N-ary Tree
 * Heap (Min and Max)
 * Graph - using an adjacency list
 *   Vertex
