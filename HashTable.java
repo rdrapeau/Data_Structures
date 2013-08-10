@@ -9,7 +9,7 @@ public class HashTable<K, V> {
 	/**
 	 * The default starting size of the HashTable.
 	 */
-	private static final int DEFAULT_SIZE = 19;
+	private static final int DEFAULT_SIZE = 11;
 	
 	/**
 	 * The elements in the HashTable.
@@ -35,9 +35,47 @@ public class HashTable<K, V> {
 	 * @param value - The value of the entry
 	 */
 	public void put(K key, V value) {
+		if (getAlpha() > 0.75) {
+			resize(elements.length * 2 + 1);
+		}
 		int index = getIndexOf(key);
 		elements[index] = new Node(key, value, elements[index]);
 		size++;
+	}
+	
+	/**
+	 * Returns whether or not the key is in the HashTable.
+	 * 
+	 * @param key - The key to check
+	 * @return True if the key is in the HashTable and false otherwise.
+	 */
+	public boolean containsKey(K key) {
+		Node current = elements[getIndexOf(key)];
+		while (current != null) {
+			if (current.key == key) {
+				return true;
+			}
+			current = current.next;
+		}
+		return false;
+	}
+	
+	/**
+	 * Resizes the length of the HashTable to be as big as length.
+	 * 
+	 * @param length - The new length of the HashTable
+	 */
+	private void resize(int length) {
+		Node[] newElements = (Node[]) new Object[length];
+		for (int i = 0; i < elements.length; i++) {
+			Node current = elements[i];
+			while (current != null) {
+				int index = getIndexOf(current.key);
+				newElements[index] = new Node(current.key, current.value, newElements[index]);
+				current = current.next;
+			}
+		}
+		elements = newElements;
 	}
 	
 	/**
@@ -47,9 +85,37 @@ public class HashTable<K, V> {
 	 * @return The index of the key
 	 */
 	private int getIndexOf(K key) {
-		return key.hashCode() % elements.length;
+		return getIndexOf(key, elements.length);
 	}
 	
+	/**
+	 * Returns the index of the key in a array of length.
+	 * 
+	 * @param key - The key to find the index of
+	 * @param length - The length of the array
+	 * @return The index of the key
+	 */
+	private int getIndexOf(K key, int length) {
+		return key.hashCode() % length;
+	}
+	
+	/**
+	 * Returns the size of the HashTable.
+	 * 
+	 * @return The size of the HashTable
+	 */
+	private int size() {
+		return size;
+	}
+	
+	/**
+	 * Returns the alpha parameter of the HashTable: a = n / |S|
+	 * 
+	 * @return The number of objects per index on average
+	 */
+	private double getAlpha() {
+		return size / (double) elements.length;
+	}
 	
 	/**
 	 * Implementation of a LinkedList Node for a HashTable.
