@@ -20,6 +20,7 @@ Implemented:
 * K-Tree - also known as a N-ary Tree
 * Heap (Min or Max)
 * BloomFilter - also known as a HashSet
+* HashTable - using chaining
 * Graph - using an adjacency list
 *   Vertex
 *   Edge
