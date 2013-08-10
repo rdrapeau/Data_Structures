@@ -12,6 +12,11 @@ public class HashTable<K, V> {
 	private static final int DEFAULT_SIZE = 11;
 	
 	/**
+	 * The threshold of when to resize the HashTable to be bigger.
+	 */
+	private static final double ALPHA_THRESHOLD = 0.80;
+	
+	/**
 	 * The elements in the HashTable.
 	 */
 	private Object[] elements;
@@ -35,7 +40,7 @@ public class HashTable<K, V> {
 	 * @param value - The value of the entry
 	 */
 	public void put(K key, V value) {
-		if (getAlpha() > 0.75) {
+		if (getAlpha() > ALPHA_THRESHOLD) {
 			resize(elements.length * 2 + 1);
 		}
 		int index = getIndexOf(key);
