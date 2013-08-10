@@ -14,7 +14,7 @@ public class HashTable<K, V> {
 	/**
 	 * The elements in the HashTable.
 	 */
-	private Node[] elements;
+	private Object[] elements;
 	
 	/**
 	 * The number of elements in the HashTable.
@@ -25,7 +25,7 @@ public class HashTable<K, V> {
 	 * Constructs a new HashTable.
 	 */
 	public HashTable() {
-		elements = (Node[]) new Object[DEFAULT_SIZE];
+		elements = new Object[DEFAULT_SIZE];
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class HashTable<K, V> {
 			resize(elements.length * 2 + 1);
 		}
 		int index = getIndexOf(key);
-		elements[index] = new Node(key, value, elements[index]);
+		elements[index] = new Node(key, value, (Node) elements[index]);
 		size++;
 	}
 	
@@ -50,7 +50,7 @@ public class HashTable<K, V> {
 	 * @return True if the key is in the HashTable and false otherwise.
 	 */
 	public boolean containsKey(K key) {
-		Node current = elements[getIndexOf(key)];
+		Node current = (Node) elements[getIndexOf(key)];
 		while (current != null) {
 			if (current.key == key) {
 				return true;
@@ -66,12 +66,12 @@ public class HashTable<K, V> {
 	 * @param length - The new length of the HashTable
 	 */
 	private void resize(int length) {
-		Node[] newElements = (Node[]) new Object[length];
+		Object[] newElements = new Object[length];
 		for (int i = 0; i < elements.length; i++) {
-			Node current = elements[i];
+			Node current = (Node) elements[i];
 			while (current != null) {
 				int index = getIndexOf(current.key);
-				newElements[index] = new Node(current.key, current.value, newElements[index]);
+				newElements[index] = new Node(current.key, current.value, (Node) newElements[index]);
 				current = current.next;
 			}
 		}
@@ -96,7 +96,11 @@ public class HashTable<K, V> {
 	 * @return The index of the key
 	 */
 	private int getIndexOf(K key, int length) {
-		return key.hashCode() % length;
+		int index = key.hashCode() % length;
+		if (index < 0) {
+			index += length;
+		}
+		return index;
 	}
 	
 	/**
@@ -157,7 +161,12 @@ public class HashTable<K, V> {
 		 */
 		public Node(K key, V value, Node next) {
 			this.key = key;
+			this.value = value;
 			this.next = next;
+		}
+		
+		public String toString() {
+			return "[" + key + " : " + value + (next != null ? ", " + next.toString() : "") + "]";
 		}
 	}
 }
