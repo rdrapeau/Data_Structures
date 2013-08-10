@@ -4,6 +4,11 @@ import java.util.BitSet;
 
 /**
  * Implementation of the Bloom Filter data structure (also known as the HashSet)
+ * 
+ * NOTE: This was just to get an idea for how a BloomFilter can be implemented. 5+ hash functions
+ * should be used in order to reduce the false positive probability - and I have not learned enough 
+ * them to be able to implement 5 on my own. In this class, I have implemented 2 hash functions which 
+ * reduce the probability to 2-5%. 
  * @author RDrapeau
  *
  */
@@ -11,7 +16,12 @@ public class BloomFilter<E> {
 	/**
 	 * The number of bits per object in the filter: n / |S| =  # of bits per object
 	 */
-	private static final int BITS_PER_OBJECT = 8;
+	private static final int BITS_PER_OBJECT = 32;
+	
+	/**
+	 * The length of the bit vector.
+	 */
+	private final int LENGTH;
 	
 	/**
 	 * The elements of the BloomFilter.
@@ -24,12 +34,13 @@ public class BloomFilter<E> {
 	private int size;
 	
 	/**
-	 * Constructs a new BloomFilter with 8 bits assigned to each object.
+	 * Constructs a new BloomFilter with n # bits assigned to each object.
 	 * 
 	 * @param size - The number of objects to be added to the BloomFilter
 	 */
 	public BloomFilter(int size) {
-		elements = new BitSet(size * BITS_PER_OBJECT);
+		LENGTH = size * BITS_PER_OBJECT;
+		elements = new BitSet(LENGTH);
 	}
 	
 	/**
@@ -38,11 +49,8 @@ public class BloomFilter<E> {
 	 * @param element - The element to add to the set 
 	 */
 	public void add(E element) {
-		int initial = defaultHash(element);
-		int offset = secondaryHash(element);
-		for (int i = initial; i < elements.length(); i += offset) {
-			elements.set(i);
-		}
+		elements.set(defaultHash(element));
+		elements.set(secondaryHash(element));
 		size++;
 	}
 	
@@ -53,14 +61,7 @@ public class BloomFilter<E> {
 	 * @return True if the element is in the bloom filter and false otherwise
 	 */
 	public boolean contains(E element) {
-		int initial = defaultHash(element);
-		int offset = secondaryHash(element);
-		for (int i = initial; i < elements.length(); i += offset) {
-			if (!elements.get(i)) {
-				return false;
-			}
-		}
-		return true;
+		return elements.get(defaultHash(element)) && elements.get(secondaryHash(element));
 	}
 	
 	/**
@@ -70,7 +71,7 @@ public class BloomFilter<E> {
 	 * @return The index of the element in the set
 	 */
 	private int defaultHash(E element) {
-		return element.hashCode() % elements.length();
+		return element.hashCode() % LENGTH;
 	}
 	
 	/**
@@ -86,6 +87,6 @@ public class BloomFilter<E> {
 	private int secondaryHash(E element) {
 		int h = element.hashCode();
 		h ^= (h >>> 20) ^ (h >>> 12);
-		return (h ^ (h >>> 7) ^ (h >>> 4)) % elements.length();
+		return (h ^ (h >>> 7) ^ (h >>> 4)) % LENGTH;
 	}
 }
