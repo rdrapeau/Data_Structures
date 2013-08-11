@@ -14,7 +14,7 @@ public class HashTable<K, V> {
 	/**
 	 * The threshold of when to resize the HashTable to be bigger.
 	 */
-	private static final double ALPHA_THRESHOLD = 0.80;
+	private static final double LOAD = 0.80;
 	
 	/**
 	 * The elements in the HashTable.
@@ -40,7 +40,7 @@ public class HashTable<K, V> {
 	 * @param value - The value of the entry
 	 */
 	public void put(K key, V value) {
-		if (getAlpha() > ALPHA_THRESHOLD) {
+		if (getLoad() > LOAD) {
 			resize(elements.length * 2 + 1);
 		}
 		int index = getIndexOf(key);
@@ -122,7 +122,7 @@ public class HashTable<K, V> {
 	 * 
 	 * @return The number of objects per index on average
 	 */
-	private double getAlpha() {
+	private double getLoad() {
 		return size / (double) elements.length;
 	}
 	
