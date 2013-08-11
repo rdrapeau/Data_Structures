@@ -375,6 +375,30 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	}
 	
 	/**
+	 * Reverses the List.
+	 */
+	public void reverseR() {
+		head = reverseR(head);
+	}
+	
+	/**
+	 * Reverses the linked list starting at head.
+	 * 
+	 * @param head - The head of the LinkedList
+	 * @return The head of the reversed LinkedList
+	 */
+	private Node reverseR(Node head) {
+		if (head != null && head.next != null) {
+			Node last = head.next;
+			head.next = null;
+			Node next = reverseR(last);
+			last.next = head;
+			head = next;
+		}
+		return head;
+	}
+	
+	/**
 	 * Represents a single Node in the SinglyLinkedList.
 	 * @author RDrapeau
 	 */
