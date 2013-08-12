@@ -389,11 +389,11 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	 */
 	private Node reverseR(Node head) {
 		if (head != null && head.next != null) {
-			Node last = head.next;
+			Node end = head.next;
 			head.next = null;
-			Node next = reverseR(last);
-			last.next = head;
-			head = next;
+			Node front = reverseR(end);
+			end.next = head;
+			head = front;
 		}
 		return head;
 	}
