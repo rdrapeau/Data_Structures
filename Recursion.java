@@ -84,4 +84,24 @@ public class Recursion {
 		}
 		return permutations;
 	}
+	
+	/**
+	 * Returns base raised to the exp power.
+	 * 
+	 * @param base - Base of the exponent
+	 * @param exp - Power
+	 * @return The base raised to the exp power
+	 */
+	public static double pow(double base, double exp) {
+		if (exp < 0) {
+			return 1 / pow(base, exp * -1);
+		} else if (exp == 0) {
+			return 1;
+		} else if (exp == 1) {
+			return base;
+		} else {
+			double half = pow(base, exp / 2);
+			return half * half * pow(base, exp % 2);
+		}
+	}
 }
