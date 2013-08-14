@@ -3,7 +3,8 @@ package Cracking_The_Coding_Interview;
 
 public class Recursion {
 	public static void main(String[] args) {
-		System.out.println(permutations("Hello"));
+		int[][] matrix = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+		System.out.println(paths(matrix));
 	}
 	
 	/**
@@ -103,5 +104,39 @@ public class Recursion {
 			double half = pow(base, exp / 2);
 			return half * half * pow(base, exp % 2);
 		}
+	}
+	
+	/**
+	 * Returns the number of paths from the bottom left corner to the top right corner.
+	 * 
+	 * @param matrix - The 2d array
+	 * @return The number of paths from (0,0) to the top right corner
+	 */
+	public static int paths(int[][] matrix) {
+		return paths(matrix, 0, 0, matrix.length);
+	}
+	
+	/**
+	 * Returns the number of paths from the bottom left corner to the top right corner in a
+	 * 2d array - the path must consist of all zeros. (anything else is an obstacle)
+	 * 
+	 * @param matrix - The 2d array to check
+	 * @param x - Current x position
+	 * @param y - Current y position
+	 * @param length - Size of the array
+	 * @return The number of paths from (x,y) to the top right corner
+	 */
+	private static int paths(int[][] matrix, int x, int y, int length) {
+		if (x + 1 == length && y + 1 == length) {
+			return 1;
+		} 
+		int count = 0;
+		if (x + 1 < length && matrix[y][x + 1] == 0) {
+			count += paths(matrix, x + 1, y, length);
+		}
+		if (y + 1 < length && matrix[y + 1][x] == 0) {
+			count += paths(matrix, x, y + 1, length);
+		}
+		return count;
 	}
 }
