@@ -3,8 +3,7 @@ package Cracking_The_Coding_Interview;
 
 public class Recursion {
 	public static void main(String[] args) {
-		int[][] matrix = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-		System.out.println(paths(matrix));
+		printParens(6);
 	}
 	
 	/**
@@ -138,5 +137,36 @@ public class Recursion {
 			count += paths(matrix, x, y + 1, length);
 		}
 		return count;
+	}
+	
+	/**
+	 * Prints all the possible combinations of valid parens.
+	 * 
+	 * @param count - The number of complete parens
+	 */
+	public static void printParens(int count) {
+		if (count < 0) {
+			throw new IllegalArgumentException();
+		}
+		printParens(count, count, "");
+	}
+	
+	/**
+	 * Prints out all the possible combinations of left and right parens.
+	 * 
+	 * @param left - Number of left parens left
+	 * @param right - Number of right parens left
+	 * @param soFar - The paren arrangement so far
+	 */
+	private static void printParens(int left, int right, String soFar) {
+		if (left == 0 && right == 0) {
+			System.out.println(soFar);
+		}
+		if (left > 0) {
+			printParens(left - 1, right, soFar + "(");
+		}
+		if (right > left) {
+			printParens(left, right - 1, soFar + ")");
+		}
 	}
 }
