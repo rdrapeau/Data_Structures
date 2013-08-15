@@ -2,8 +2,8 @@ package Cracking_The_Coding_Interview;
 
 public class SearchingandSorting {
 	public static void main(String[] args) {
-		String[] a = {"a", "", "", "", "b", "", "", "", "c", "", "d"};
-		System.out.println(stringSearch(a, "d"));
+		int[] a = {4, 5, 1, 2, 3};
+		System.out.println(rotatedBinarySearch(a, 3));
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class SearchingandSorting {
 			int mid = (max + min) / 2;
 			if (a[mid] == find) {
 				return mid;
-			} else if (a[mid] > find && a[min] <= find) {
+			} else if (a[mid] > find && a[min] <= find || (a[mid] < find && a[max - 1] < find)) {
 				return rotatedBinarySearch(a, find, min, mid);
 			} else {
 				return rotatedBinarySearch(a, find, mid + 1, max);
