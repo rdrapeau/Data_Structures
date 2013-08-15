@@ -1,9 +1,12 @@
 package Cracking_The_Coding_Interview;
 
+import java.util.Arrays;
+
 
 public class Recursion {
 	public static void main(String[] args) {
-		printParens(6);
+		int[] coins = {25, 5, 10, 1};
+		System.out.println(makeChange(1000, coins));
 	}
 	
 	/**
@@ -168,5 +171,38 @@ public class Recursion {
 		if (right > left) {
 			printParens(left, right - 1, soFar + ")");
 		}
+	}
+	
+	/**
+	 * Returns the number of ways to make the amount with the coins.
+	 * 
+	 * @param amount - The desired amount
+	 * @param coins - Possible coins
+	 * @return The number of ways to make the amount with the coins
+	 */
+	public static int makeChange(int amount, int[] coins) {
+		Arrays.sort(coins);
+		return makeChange(amount, coins, 0);
+	}
+	
+	/**
+	 * Returns the number of ways to make the amount with the coins.
+	 * 
+	 * @param amount - The desired amount
+	 * @param coins - The possible coins
+	 * @param index - Index of current coin being used
+	 * @return The number of ways to make the amount with the coins
+	 */
+	private static int makeChange(int amount, int[] coins, int index) {
+		int count = 0;
+		if (amount == 0) {
+			count++;
+		} else if (amount > 0 && index < coins.length) {
+			int max = amount / coins[index];
+			for (int i = 0; i <= max; i++) {
+				count += makeChange(amount - coins[index] * i, coins, index + 1);
+			}
+		}
+		return count;
 	}
 }
