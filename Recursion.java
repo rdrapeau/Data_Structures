@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class Recursion {
 	public static void main(String[] args) {
-		int[] coins = {25, 5, 10, 1};
-		System.out.println(makeChange(1000, coins));
+		int[] coins = {25, 10, 5};
+		System.out.println(makeChange(10000, coins));
 	}
 	
 	/**

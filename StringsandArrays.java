@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Random practice from chapter 1 of Cracking the Coding Interview.
  * @author RDrapeau
  */
-public class Chapter1 {
+public class StringsandArrays {
 
 	/**
 	 * Returns whether or not the input has all unique characters (assumes the string is made up of
@@ -196,5 +196,61 @@ public class Chapter1 {
 			max = Math.max(matrix[row].length, max);
 		}
 		return max;
+	}
+	
+	/**
+	 * Returns the index of needle in the haystack.
+	 * 
+	 * @param haystack - The String to search in
+	 * @param needle - The String to search for
+	 * @return The index of the first character in needle if there is a match (-1 otherwise)
+	 */
+	public static int indexOf(String haystack, String needle) {
+		return kmp(haystack, needle, createDFA(haystack, needle));
+	}
+	
+	/**
+	 * Runs the KMP String matching algorithm to determine the first index of the match.
+	 * 
+	 * @param haystack - The String to search in
+	 * @param needle - The String to search for
+	 * @param next - The DFA of needle
+	 * @return The index of the first character in needle if there is a match (-1 otherwise)
+	 */
+	private static int kmp(String haystack, String needle, int[] next) {
+		int j = 0;
+		for (int i = 0; i < haystack.length(); i++) {
+			if (haystack.charAt(i) == needle.charAt(j)) {
+				j++;
+			} else {
+				j = next[j];
+			}
+			if (j == needle.length()) {
+				return i - j + 1;
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * Creates a DFA for the needle with haystack - if there is a mismatch what is the longest
+	 * sequence possible so far with needle and haystack.
+	 * 
+	 * @param haystack - The String to search in
+	 * @param needle - The String to search for
+	 * @return The DFA for needle and haystack
+	 */
+	private static int[] createDFA(String haystack, String needle) {
+		int i = 0;
+		int[] next = new int[needle.length()];
+		for (int j = 1; j < needle.length(); j++) {
+			if (haystack.charAt(i) == needle.charAt(j)) {
+				next[j] = next[i++];
+			} else {
+				next[j] = i + 1;
+				i = next[i];
+			}
+		}
+		return next;
 	}
 }
