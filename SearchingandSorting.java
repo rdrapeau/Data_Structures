@@ -1,9 +1,19 @@
 package Cracking_The_Coding_Interview;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class SearchingandSorting {
+	private static final int SIZE = 10000;
+	private static final Random r = new Random();
+	
 	public static void main(String[] args) {
-		int[] a = {4, 5, 1, 2, 3};
-		System.out.println(rotatedBinarySearch(a, 3));
+		int[] a = new int[SIZE];
+		for (int i = 0; i < SIZE; i++) {
+			a[i] = r.nextInt(SIZE);
+		}
+		heapSort(a);
+		System.out.println(Arrays.toString(a));
 	}
 
 	/**
@@ -95,5 +105,108 @@ public class SearchingandSorting {
 			return stringSearch(a, find, min, oldIndex);
 		}
 		return -1;
+	}
+	
+	/**
+	 * Performs Heap Sort on the integer array.
+	 * 
+	 * @param a - The array to sort
+	 */
+	public static void heapSort(int[] a) {
+		heapify(a);
+		int last = a.length - 1;
+		for (int i = 0; i < a.length; i++) {
+			a[last] = extractMax(a, last);
+			last--;
+		}
+	}
+	
+	/**
+	 * Returns the maximum from the heapified array a.
+	 * 
+	 * @param a - The heap to get the max from
+	 * @param last - The last index of the heap in the array
+	 * @return The maximum value in the heap
+	 */
+	private static int extractMax(int[] a, int last) {
+		int max = a[0];
+		a[0] = a[last--];
+		int index = 0;
+		int child = getBiggerChildIndex(a, index);
+		while (child <= last && a[child] > a[index]) {
+			swap(a, index, child);
+			index = child;
+			child = getBiggerChildIndex(a, index);
+		}
+		return max;
+	}
+	
+	/**
+	 * Converts a into a heap by bubbling up from the leafs.
+	 * 
+	 * @param a - The array to convert into a heap
+	 */
+	private static void heapify(int[] a) {
+		for (int i = a.length - 1; i >= 0; i--) {
+			bubbleUp(a, i);
+		}
+	}
+	
+	/**
+	 * Bubbles up the maximum elements from the index in the heap a
+	 * 
+	 * @param a - The heap
+	 * @param index - The current index
+	 */
+	private static void bubbleUp(int[] a, int index) {
+		int parent = getParentIndex(index);
+		while (parent != -1 && a[parent] < a[index]) {
+			swap(a, index, parent);
+			index = parent;
+			parent = getParentIndex(index);
+		}
+	}
+	
+	/**
+	 * Swaps the two values at the indices in the array
+	 * 
+	 * @param a - The array
+	 * @param first - The first element to swap
+	 * @param second - The second element to swap
+	 */
+	private static void swap(int[] a, int first, int second) {
+		int temp = a[first];
+		a[first] = a[second];
+		a[second] = temp;
+	}
+	
+	/**
+	 * Returns the parent index of the index in the heap.
+	 * 
+	 * @param index - The child
+	 * @return The index of the parent (-1 if the index is 0 (the root))
+	 */
+	private static int getParentIndex(int index) {
+		return index == 0 ? -1 : (index - 1) / 2;
+	}
+	
+	/**
+	 * Returns the index of the bigger child.
+	 * 
+	 * @param a - The heap
+	 * @param index - The parent index
+	 * @return The index of the larger child (a.length if none exists)
+	 */
+	private static int getBiggerChildIndex(int[] a, int index) {
+		int first = index * 2 + 1;
+		int second = index * 2 + 2;
+		if (first < a.length || second < a.length) {
+			if (first >= a.length || (second < a.length && a[second] > a[first])) {
+				return second;
+			} else {
+				return first;
+			}
+		}
+		return a.length;
 	}
 }
