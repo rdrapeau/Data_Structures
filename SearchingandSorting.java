@@ -4,16 +4,15 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class SearchingandSorting {
-	private static final int SIZE = 10000;
+	private static final int SIZE = 10000000;
 	private static final Random r = new Random();
 	
 	public static void main(String[] args) {
-		int[] a = new int[SIZE];
-		for (int i = 0; i < SIZE; i++) {
-			a[i] = r.nextInt(SIZE);
+		int[][] matrix = {{4, 2, 5, 10}, {3, 8, 7, 12}, {1, 6, 9, 11}, {13, 15, 14, 16}};
+		sort(matrix, matrix.length);
+		for (int[] row : matrix) {
+			System.out.println(Arrays.toString(row));
 		}
-		heapSort(a);
-		System.out.println(Arrays.toString(a));
 	}
 
 	/**
@@ -208,5 +207,83 @@ public class SearchingandSorting {
 			}
 		}
 		return a.length;
+	}
+	
+	/**
+	 * Sorts a n * n matrix into sorted order.
+	 * 
+	 * @param matrix - Matrix to sort
+	 * @param n - Length of the matrix
+	 */
+	public static void sort(int[][] matrix, int n) {
+		sort(matrix, n, 0, n * n);
+	}
+	
+	/**
+	 * Sorts a n * n matrix into sorted order from left to right, top to down.
+	 * 
+	 * @param matrix - Matrix to sort
+	 * @param n - Length of the matrix
+	 * @param start - The starting index
+	 * @param end - The ending index
+	 */
+	public static void sort(int[][] matrix, int n, int start, int end) {
+		if (start < end) {
+			int index = r.nextInt(end - start) + start;
+			int pivot = matrix[getRow(index, n)][getCol(index, n)];
+			swap(matrix, getRow(index, n), getCol(index, n), getRow(start, n), getCol(start, n));
+			int large = start + 1;
+			for (int i = large; i < end; i++) {
+				int row = getRow(i, n);
+				int col = getCol(i, n);
+				if (matrix[row][col] < pivot) {
+					int row2 = getRow(large, n);
+					int col2 = getCol(large, n);
+					swap(matrix, row, col, row2, col2);
+					large++;
+				}
+			}
+			large--;
+			swap(matrix, getRow(start, n), getCol(start, n), getRow(large, n), getCol(large, n));
+			sort(matrix, n, start, large);
+			sort(matrix, n, large + 1, end);
+		}
+	}
+	
+	/**
+	 * Swaps two elements in a matrix.
+	 * 
+	 * @param matrix - The matrix to swap the elements in
+	 * @param row - Row of the first element
+	 * @param col - Col of the first element
+	 * @param row2 - Row of the second element
+	 * @param col2 - Col of the second element
+	 */
+	private static void swap(int[][] matrix, int row, int col, int row2, int col2) {
+		int temp = matrix[row][col];
+		matrix[row][col] = matrix[row2][col2];
+		matrix[row2][col2] = temp;
+	}
+	
+	/**
+	 * Returns the row of the index in a n * n matrix.
+	 * 
+	 * @param index - The index of the element
+	 * @param n - The length of the matrix
+	 * @return The row of the element
+	 */
+	private static int getRow(int index, int n) {
+		return index / n;
+	}
+	
+	/**
+	 * Returns the col of the index in a n * n matrix.
+	 * 
+	 * @param index - The index of the element
+	 * @param n - The length of the matrix
+	 * @return The col of the element
+	 */
+	private static int getCol(int index, int n) {
+		return index % n;
 	}
 }
