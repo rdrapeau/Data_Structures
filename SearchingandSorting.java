@@ -13,6 +13,7 @@ public class SearchingandSorting {
 		for (int[] row : matrix) {
 			System.out.println(Arrays.toString(row));
 		}
+		System.out.println(matrixBS(matrix, 5));
 	}
 
 	/**
@@ -285,5 +286,27 @@ public class SearchingandSorting {
 	 */
 	private static int getCol(int index, int n) {
 		return index % n;
+	}
+	
+	/**
+	 * Returns whether or not the sorted matrix contains the number.
+	 * 
+	 * @param matrix - The matrix to find the element in
+	 * @param number - The number to search for
+	 * @return True if the matrix contains the number and false otherwise
+	 */
+	public static boolean matrixBS(int[][] matrix, int number) {
+		int row = 0;
+		int col = matrix.length - 1;
+		while (row < matrix.length && col >=0) {
+			if (matrix[row][col] == number) {
+				return true;
+			} else if (matrix[row][col] < number) {
+				row++;
+			} else {
+				col--;
+			}
+		}
+		return false;
 	}
 }
