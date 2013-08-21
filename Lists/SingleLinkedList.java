@@ -403,8 +403,8 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	 * 
 	 * @param other - The other linked list
 	 */
-	public void interweave(SingleLinkedList other) {
-		interweave(this.head, (Node) other.head);
+	public void interweave(SingleLinkedList<E> other) {
+		interweave(this.head, other.head);
 	}
 	
 	/**
