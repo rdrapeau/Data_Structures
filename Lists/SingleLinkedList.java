@@ -399,6 +399,32 @@ public class SingleLinkedList<E extends Comparable<E>> {
 	}
 	
 	/**
+	 * Interweave the other linked list into this one by alternating elements.
+	 * 
+	 * @param other - The other linked list
+	 */
+	public void interweave(SingleLinkedList other) {
+		interweave(this.head, (Node) other.head);
+	}
+	
+	/**
+	 * Interweaves the two heads of the linked list into one.
+	 * 
+	 * @param head - The first list
+	 * @param other - The second list
+	 */
+	private void interweave(Node head, Node other) {
+		Node current = head;
+		while (current != null && other != null) {
+			Node temp = current.next;
+			current.next = other;
+			other = other.next;
+			current.next.next = temp;
+			current = temp;
+		}
+	}
+	
+	/**
 	 * Represents a single Node in the SinglyLinkedList.
 	 * @author RDrapeau
 	 */
