@@ -542,21 +542,26 @@ public class BinarySearchTree<E extends Comparable> {
 		return root.element == other.element && match(root.left, other.left) && match(root.right, other.right);
 	}
 	
-	public double difference() {
+	/**
+	 * Returns the difference in the odd and even levels of the tree.
+	 * 
+	 * @return Difference in the odd and even levels
+	 */
+	public int difference() {
 		return difference(this.root);
 	}
-
-	private double difference(Node root) {
-		double oddSum = 0;
-		double evenSum = 0;
-		Queue<Node> q = new LinkedList<Node>();
-		Queue<Node> nextLevel = new LinkedList<Node>();
-		q.add(root);
-		while (!q.isEmpty()) {
-			Node element = q.remove();
+	
+	/**
+	 * Returns the difference in the odd and even levels of the tree.
+	 * 
+	 * @param root - The root of the tree
+	 * @return The difference in the odd and even levels
+	 */
+	private int difference(Node root) {
+		if (root == null) {
+			return 0;
 		}
-		
-		return oddSum - evenSum;
+		return (Integer) root.element - difference(root.left) - difference(root.right);
 	}
 	
 	/**
