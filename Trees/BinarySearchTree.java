@@ -542,6 +542,23 @@ public class BinarySearchTree<E extends Comparable> {
 		return root.element == other.element && match(root.left, other.left) && match(root.right, other.right);
 	}
 	
+	public double difference() {
+		return difference(this.root);
+	}
+
+	private double difference(Node root) {
+		double oddSum = 0;
+		double evenSum = 0;
+		Queue<Node> q = new LinkedList<Node>();
+		Queue<Node> nextLevel = new LinkedList<Node>();
+		q.add(root);
+		while (!q.isEmpty()) {
+			Node element = q.remove();
+		}
+		
+		return oddSum - evenSum;
+	}
+	
 	/**
 	 * Performs an in-order traversal of the tree printing out each element
 	 */
