@@ -1,6 +1,8 @@
 package Cracking_The_Coding_Interview;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class SearchingandSorting {
@@ -8,12 +10,16 @@ public class SearchingandSorting {
 	private static final Random r = new Random();
 	
 	public static void main(String[] args) {
-		int[][] matrix = {{4, 2, 5, 10}, {3, 8, 7, 12}, {1, 6, 9, 11}, {13, 15, 14, 16}};
-		sort(matrix, matrix.length);
-		for (int[] row : matrix) {
-			System.out.println(Arrays.toString(row));
-		}
-		System.out.println(matrixBS(matrix, 5));
+		List<Person> gymnasts = new ArrayList<Person>();
+		gymnasts.add(new Person(65, 100));
+		gymnasts.add(new Person(70, 150));
+		gymnasts.add(new Person(56, 90));
+		gymnasts.add(new Person(75, 190));
+		gymnasts.add(new Person(60, 95));
+		gymnasts.add(new Person(68, 110));
+		gymnasts.add(new Person(50, 300));
+		System.out.println(topplingGymnast(gymnasts));
+		System.out.println(topplingGymnast(gymnasts).size());
 	}
 
 	/**
@@ -308,5 +314,32 @@ public class SearchingandSorting {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns a solution to the toppling gymnast problem. (See book)
+	 * 
+	 * @param gymnasts - A list of the gymnasts
+	 * @return The solution to the toppling gymnast problem
+	 */
+	public static List<Person> topplingGymnast(List<Person> gymnasts) {
+		List<Person> maxOrder = new ArrayList<Person>();
+		List<Person> current = new ArrayList<Person>();
+		Collections.sort(gymnasts);
+		if (gymnasts.size() > 0) {
+			current.add(gymnasts.get(0));
+		}
+		for (int i = 1; i < gymnasts.size(); i++) {
+			Person p = gymnasts.get(i);
+			Person previous = gymnasts.get(i - 1);
+			if (p.weight < previous.weight || p.height < previous.height) {
+				current.clear();
+			}
+			current.add(p);
+			if (current.size() > maxOrder.size()) {
+				maxOrder = current;
+			}
+		}
+		return maxOrder;
 	}
 }

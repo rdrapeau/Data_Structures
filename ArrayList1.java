@@ -9,7 +9,7 @@ import java.util.Random;
  *
  * @param <E>
  */
-public class ArrayList<E extends Comparable> {
+public class ArrayList1<E extends Comparable> {
 	/**
 	 * The default capacity of the ArrayList.
 	 */
@@ -33,7 +33,7 @@ public class ArrayList<E extends Comparable> {
 	/**
 	 * Constructs a new ArrayList of default capacity.
 	 */
-	public ArrayList() {
+	public ArrayList1() {
 		this(DEFAULT_CAPACITY);
 	}
 	
@@ -42,7 +42,7 @@ public class ArrayList<E extends Comparable> {
 	 * 
 	 * @param size - The size of the initial array
 	 */
-	public ArrayList(int size) {
+	public ArrayList1(int size) {
 		this.elements = new Object[size]; 
 	}
 	
