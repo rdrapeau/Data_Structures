@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Lists;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -9,7 +9,7 @@ import java.util.Random;
  *
  * @param <E>
  */
-public class ArrayList1<E extends Comparable> {
+public class ArrayList<E extends Comparable> {
 	/**
 	 * The default capacity of the ArrayList.
 	 */
@@ -33,7 +33,7 @@ public class ArrayList1<E extends Comparable> {
 	/**
 	 * Constructs a new ArrayList of default capacity.
 	 */
-	public ArrayList1() {
+	public ArrayList() {
 		this(DEFAULT_CAPACITY);
 	}
 	
@@ -42,7 +42,7 @@ public class ArrayList1<E extends Comparable> {
 	 * 
 	 * @param size - The size of the initial array
 	 */
-	public ArrayList1(int size) {
+	public ArrayList(int size) {
 		this.elements = new Object[size]; 
 	}
 	

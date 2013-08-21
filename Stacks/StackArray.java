@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Stacks;
 
 /**
  * Implementation of the Stack data structure using an Array to store the elements.

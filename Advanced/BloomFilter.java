@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Advanced;
 
 import java.util.BitSet;
 

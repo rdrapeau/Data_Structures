@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Queues;
 
 /**
  * Implementation of the Queue data structure using an Array to store the elements.

@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Queues;
 
 /**
  * Implementation of the Queue data structure using a Linked List to store the elements.

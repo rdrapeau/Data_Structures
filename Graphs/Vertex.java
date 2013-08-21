@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Graphs;
 
 import java.util.HashSet;
 import java.util.Iterator;

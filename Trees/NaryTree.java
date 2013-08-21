@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Trees;
 
 import java.util.Arrays;
 import java.util.LinkedList;

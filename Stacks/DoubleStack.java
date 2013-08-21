@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Stacks;
 
 /**
  * Implementation of the DoubleStack data structure. This object uses only 1 array to represent

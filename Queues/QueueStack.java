@@ -1,4 +1,6 @@
-package Cracking_The_Coding_Interview;
+package Queues;
+
+import Stacks.StackLinkedList;
 
 /**
  * Implementation of the Queue data structure using two Stacks to store the elements.

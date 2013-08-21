@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Stacks;
 
 import java.util.ArrayList;
 import java.util.List;

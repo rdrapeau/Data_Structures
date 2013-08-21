@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Graphs;
 
 import java.util.ArrayList;
 import java.util.HashMap;

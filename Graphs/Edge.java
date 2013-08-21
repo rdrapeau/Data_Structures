@@ -1,4 +1,4 @@
-package Cracking_The_Coding_Interview;
+package Graphs;
 
 /**
  * This class represents an Edge object. An Edge is a connection between two Vertices or Nodes. 

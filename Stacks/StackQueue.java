@@ -1,4 +1,6 @@
-package Cracking_The_Coding_Interview;
+package Stacks;
+
+import Queues.QueueLinkedList;
 
 /**
  * Implementation of the Stack data structure using two queues.
