@@ -65,7 +65,7 @@ public class Mathematics {
 		double right = a;
 		double middle;
 		double squared;
-		double epsilon = 0.00001; // Allowable error
+		double epsilon = 0.00001; // Allowable error for the result
 		while (right - left > epsilon) {
 			middle = (right + left) / 2;
 			squared = middle * middle;
