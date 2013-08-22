@@ -2,7 +2,7 @@ package Algorithms;
 
 public class Mathematics {
 	public static void main(String[] args) {
-		System.out.println(lcm(4, 10));
+		System.out.println(sqrt(100));
 	}
 
 	/**
@@ -47,5 +47,36 @@ public class Mathematics {
 	 */
 	public static int lcm(int a, int b) {
 		return a * b / gcd(a, b); // a * b = gcd(a, b) * lcm(a, b)
+	}
+	
+	/**
+	 * Returns the square root of a number a.
+	 * 
+	 * @param a - The number
+	 * @return The square root of the number
+	 */
+	public static double sqrt(double a) {
+		if (a < 0) {
+			throw new IllegalArgumentException();
+		} else if (a == 0 || a == 1) {
+			return a;
+		}
+		double left = 0;
+		double right = a;
+		double middle;
+		double squared;
+		double epsilon = 0.00001; // Allowable error
+		while (right - left > epsilon) {
+			middle = (right + left) / 2;
+			squared = middle * middle;
+			if (Math.abs(squared - a) < epsilon) {
+				return middle;
+			} else if (squared < a) {
+				left = middle;
+			} else {
+				right = middle;
+			}
+		}
+		return (left + right) / 2;
 	}
 }
