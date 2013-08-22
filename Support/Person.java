@@ -1,4 +1,4 @@
-package Algorithms;
+package Support;
 
 /**
  * A Class that represents a person height and weight for the toppling gymnast problem.

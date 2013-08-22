@@ -1,25 +1,21 @@
 package Algorithms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import Support.Person;
+
 public class SearchingandSorting {
-	private static final int SIZE = 10000000;
 	private static final Random r = new Random();
 	
 	public static void main(String[] args) {
-		List<Person> gymnasts = new ArrayList<Person>();
-		gymnasts.add(new Person(65, 100));
-		gymnasts.add(new Person(70, 150));
-		gymnasts.add(new Person(56, 90));
-		gymnasts.add(new Person(75, 190));
-		gymnasts.add(new Person(60, 95));
-		gymnasts.add(new Person(68, 110));
-		gymnasts.add(new Person(50, 300));
-		System.out.println(topplingGymnast(gymnasts));
-		System.out.println(topplingGymnast(gymnasts).size());
+		int[] a = {2, 4, 5, 3, 7, 6, 8, 9, 1, 0};
+		for (int i = 1; i <= a.length; i++) {
+			System.out.println(ithSelect(Arrays.copyOf(a, a.length), i));
+		}
 	}
 
 	/**
@@ -341,5 +337,52 @@ public class SearchingandSorting {
 			}
 		}
 		return maxOrder;
+	}
+	
+	/**
+	 * Returns the ith order statistic in the array.
+	 * 
+	 * @param a - The array
+	 * @param i - The order of the statistic pursued
+	 * @return The ith order statistic
+	 */
+	public static int ithSelect(int[] a, int i) {
+		if (i <= 0 || i > a.length) {
+			throw new IllegalArgumentException();
+		}
+		return ithSelect(a, i - 1, 0, a.length);
+	}
+	
+	/**
+	 * Returns the ith order statistic in the array.
+	 * 
+	 * @param a - The array
+	 * @param i - The order of the statistic pursued
+	 * @param left - The left bound (inclusive)
+	 * @param right - The right bound (exclusive)
+	 * @return The ith order statistic
+	 */
+	private static int ithSelect(int[] a, int i, int left, int right) {
+		if (right - left == 1) {
+			return a[left];
+		}
+		int index = r.nextInt(right - left) + left; // Random pivot
+		int pivot = a[index];
+		swap(a, index, left);
+		int large = left + 1;
+		for (int k = large; k < right; k++) { // Pivot around the index
+			if (a[k] < pivot) {
+				swap(a, k, large++);
+			}
+		}
+		index = large - 1;
+		swap(a, left, index);
+		if (index == i) {
+			return a[index];
+		} else if (index > i) { // Search left half
+			return ithSelect(a, i, left, index);
+		} else { // Right half
+			return ithSelect(a, i, index + 1, right);
+		}
 	}
 }
