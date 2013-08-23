@@ -6,7 +6,7 @@ package Graphs;
  * 
  * @author RDrapeau
  */
-public class Edge {
+public class Edge implements Comparable<Edge> {
 	/**
 	 * The tail and the head of the Edge.
 	 */
@@ -115,6 +115,10 @@ public class Edge {
 		}
 	}
 
+	public int compareTo(Edge other) {
+		return (int) Math.signum(this.weight - other.weight);
+	}
+	
 	public String toString() {
 		return "(" + ends[0].getID() + ", " + ends[1].getID() + ")";
 	}
