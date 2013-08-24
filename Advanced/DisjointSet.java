@@ -7,7 +7,7 @@ public class DisjointSet<E> {
 	private Map<E, Node> convert;
 	
 	/**
-	 * Constructs a new DisjoinSet
+	 * Constructs a new DisjointSet
 	 */
 	public DisjointSet() {
 		convert = new HashMap<E, Node>();
