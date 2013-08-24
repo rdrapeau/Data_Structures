@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DisjointSet<E> {
-	private Map<E, Node> convert;
+	/**
+	 * A forest representing the components.
+	 */
+	private Map<E, Node> convert; 
 	
 	/**
 	 * Constructs a new DisjointSet
@@ -25,6 +28,37 @@ public class DisjointSet<E> {
 	}
 	
 	/**
+	 * Replace components with their union.
+	 * 
+	 * @param first - The first element
+	 * @param second - The second element
+	 */
+	public void union(E first, E second) {
+		Node firstRoot = root(updateForest(first));
+		Node secondRoot = root(updateForest(second));
+		if (firstRoot.rank < secondRoot.rank) { // First tree is smaller
+			firstRoot.parent = secondRoot;
+			secondRoot.rank += firstRoot.rank;
+		} else { // Second tree is smaller
+			secondRoot.parent = firstRoot;
+			firstRoot.rank += secondRoot.rank;
+		}
+	}
+	
+	/**
+	 * Updates the forest to contain the element if it does not already.
+	 * 
+	 * @param element - The element to check
+	 * @return The Node representing the element
+	 */
+	private Node updateForest(E element) {
+		if (!convert.containsKey(element)) {
+			convert.put(element, new Node(element));
+		}
+		return convert.get(element);
+	}
+	
+	/**
 	 * Returns the overall root of the child and compresses the tree.
 	 * 
 	 * @param child - The child Node
@@ -32,7 +66,7 @@ public class DisjointSet<E> {
 	 */
 	private Node root(Node child) {
 		if (child != null) {
-			while (child.parent != null) {
+			while (child.parent != null) { // Move up the tree
 				child.parent = child.parent.parent;
 				child = child.parent;
 			}
@@ -40,15 +74,34 @@ public class DisjointSet<E> {
 		return child;
 	}
 	
+	/**
+	 * Represents a root of a component in the forest.
+	 * @author RDrapeau
+	 */
 	private class Node {
+		/**
+		 * The parent of this root.
+		 */
 		private Node parent;
+		
+		/**
+		 * The data of this Node.
+		 */
 		private E element;
+		
+		/**
+		 * The rank of this tree.
+		 */
 		private int rank;
 		
-		public Node(E element, int rank, Node parent) {
+		/**
+		 * Constructs a new Node with the element and a rank of 1 and a null parent.
+		 * 
+		 * @param element - The data of this Node
+		 */
+		public Node(E element) {
 			this.element = element;
-			this.rank = rank;
-			this.parent = parent;
+			this.rank = 1;
 		}
 	}
 }
