@@ -3,6 +3,12 @@ package Advanced;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Implementation of the DisjoinSet (Union-Find) data structure
+ * @author RDrapeau
+ *
+ * @param <E>
+ */
 public class DisjointSet<E> {
 	/**
 	 * A forest representing the components.
