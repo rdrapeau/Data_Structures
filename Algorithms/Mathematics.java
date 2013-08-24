@@ -2,7 +2,6 @@ package Algorithms;
 
 public class Mathematics {
 	public static void main(String[] args) {
-		System.out.println(sqrt(100));
 	}
 
 	/**
@@ -13,6 +12,9 @@ public class Mathematics {
 	 * @return The greatest common divisor
 	 */
 	public static int gcd(int a, int b) {
+		if (a < 0 || b < 0) {
+			throw new IllegalArgumentException();
+		}
 		if (b > a) {
 			return gcd(b, a);
 		} else if (b == 0) {
