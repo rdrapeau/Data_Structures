@@ -1,12 +1,13 @@
 package Algorithms;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Mathematics {
 	public static void main(String[] args) {
 		int[] a = {1, 2, 3, 4, 5, 6};
-		System.out.println(twoSum(a, 2));
+		System.out.println(threeSum(a, 15));
 	}
 
 	/**
@@ -108,5 +109,31 @@ public class Mathematics {
 		return false;
 	}
 	
-	
+	/**
+	 * Returns whether or not three numbers add up to n in the array.
+	 * 
+	 * @param a - The array (Will be sorted after finishing)
+	 * @param n - The target sum
+	 * @return True if three distinct numbers in the array add up to sum and false otherwise
+	 */
+	public static boolean threeSum(int[] a, int n) {
+		Arrays.sort(a);
+		int b;
+		int c;
+		for (int i = 0; i < a.length - 2; i++) {
+			b = i + 1;
+			c = a.length - 1;
+			while (b < c) {
+				int sum = a[i] + a[b] + a[c];
+				if (sum == n) {
+					return true;
+				} else if (sum < n) {
+					b++;
+				} else {
+					c--;
+				}
+			}
+		}
+		return false;
+	}
 }
