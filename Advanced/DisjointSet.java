@@ -59,13 +59,13 @@ public class DisjointSet<E> {
 	 */
 	private Node updateForest(E element) {
 		if (!convert.containsKey(element)) {
-			convert.put(element, new Node(element));
+			convert.put(element, new Node());
 		}
 		return convert.get(element);
 	}
 	
 	/**
-	 * Returns the overall root of the child and compresses the tree.
+	 * Returns the overall root of the child.
 	 * 
 	 * @param child - The child Node
 	 * @return The overall root of the component
@@ -73,7 +73,6 @@ public class DisjointSet<E> {
 	private Node root(Node child) {
 		if (child != null) {
 			while (child.parent != null) { // Move up the tree
-				child.parent = child.parent.parent;
 				child = child.parent;
 			}
 		}
@@ -91,11 +90,6 @@ public class DisjointSet<E> {
 		private Node parent;
 		
 		/**
-		 * The data of this Node.
-		 */
-		private E element;
-		
-		/**
 		 * The rank of this tree.
 		 */
 		private int rank;
@@ -105,8 +99,7 @@ public class DisjointSet<E> {
 		 * 
 		 * @param element - The data of this Node
 		 */
-		public Node(E element) {
-			this.element = element;
+		public Node() {
 			this.rank = 1;
 		}
 	}
