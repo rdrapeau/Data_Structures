@@ -1,7 +1,12 @@
 package Algorithms;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Mathematics {
 	public static void main(String[] args) {
+		int[] a = {1, 2, 3, 4, 5, 6};
+		System.out.println(twoSum(a, 2));
 	}
 
 	/**
@@ -81,4 +86,27 @@ public class Mathematics {
 		}
 		return (left + right) / 2;
 	}
+	
+	/**
+	 * Returns whether or not two numbers add up to n in the array.
+	 * 
+	 * @param a - The array
+	 * @param n - The target sum
+	 * @return True if two distinct numbers in the array add to sum and false otherwise
+	 */
+	public static boolean twoSum(int[] a, int n) {
+		Map<Integer, Integer> sum = new HashMap<Integer, Integer>();
+		for (int i = 0; i < a.length; i++) {
+			sum.put(a[i], i);
+		}
+		for (int i = 0; i < a.length; i++) {
+			int num = n - a[i];
+			if (sum.containsKey(num) && sum.get(num) != i) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 }
