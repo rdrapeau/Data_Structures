@@ -72,7 +72,8 @@ public class DisjointSet<E> {
 	 */
 	private Node root(Node child) {
 		if (child != null) {
-			while (child.parent != null) { // Move up the tree
+			while (child.parent != child) { // Move up the tree
+				child.parent = child.parent.parent; // Collapse tree
 				child = child.parent;
 			}
 		}
@@ -101,6 +102,7 @@ public class DisjointSet<E> {
 		 */
 		public Node() {
 			this.rank = 1;
+			this.parent = this;
 		}
 	}
 }
