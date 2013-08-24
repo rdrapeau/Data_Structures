@@ -632,12 +632,39 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 	
 	/**
-	 * Returns the maxmimum depth in the tree.
+	 * Returns the maximum depth in the tree.
 	 * 
 	 * @return The maximum depth
 	 */
 	public int maxDepth() {
 		return height() - 1;
+	}
+	
+	/**
+	 * Returns the maximum odd depth in the tree.
+	 * 
+	 * @return Maximum odd depth (-1 if none)
+	 */
+	public int maxOddDepth() {
+		return maxOddDepth(root, 0);
+	}
+	
+	/**
+	 * Returns the maximum odd depth in the tree rooted at root.
+	 * 
+	 * @param root - The root of the tree
+	 * @param count - The level of the previous Node
+	 * @return Maximum odd depth (-1 if none)
+	 */
+	private int maxOddDepth(Node root, int count) {
+		if (root == null) {
+			if (count % 2 == 1) {
+				return count;
+			}
+			return -1;
+		} else {
+			return Math.max(maxOddDepth(root.left, count + 1), maxOddDepth(root.right, count + 1));
+		}
 	}
 	
 	/**
