@@ -12,10 +12,14 @@ public class SearchingandSorting {
 	private static final Random r = new Random();
 	
 	public static void main(String[] args) {
-		int[] a = {2, 4, 5, 3, 7, 6, 8, 9, 1, 0};
-		for (int i = 1; i <= a.length; i++) {
-			System.out.println(ithSelect(Arrays.copyOf(a, a.length), i));
+		int[] a = new int[10000000];
+		for (int i = 0; i < a.length; i++) {
+			a[i] = r.nextInt(a.length);
 		}
+		long start = System.currentTimeMillis();
+		sort(a);
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
 	}
 
 	/**
@@ -383,6 +387,61 @@ public class SearchingandSorting {
 			return ithSelect(a, i, left, index);
 		} else { // Right half
 			return ithSelect(a, i, index + 1, right);
+		}
+	}
+	
+	/**
+	 * Sorts the array by using the Counting Sort algorithm.
+	 * 
+	 * @param a - The array to sort
+	 */
+	public static void sort(int[] a) {
+		if (a.length > 1) {
+			int min = a[0];
+			int max = a[0];
+			for (int i : a) {
+				if (i > max) {
+					max = i;
+				} else if (i < min) {
+					min = i;
+				}
+			}
+			sort(a, min, max);
+		}
+	}
+	
+	/**
+	 * Sorts the array a that has a range of k (max - min + 1) in O(n + k) time and space.
+	 * 
+	 * @param a - The array to sort
+	 * @param min - The minimum value in the array
+	 * @param max - The maximum value in the array
+	 */
+	private static void sort(int[] a, int min, int max) {
+		int[] count = new int[max - min + 1]; // Counts
+		int[] result = new int[a.length];
+		
+		// Count all of the entries in a
+		for (int i : a) {
+			count[i - min]++;
+		}
+		
+		// Change all the entries in count to be the index of i in the new array
+		int sum = 0;
+		for (int i = 0; i < count.length; i++) {
+			int c = count[i];
+			count[i] = sum;
+			sum += c;
+		}
+		
+		for (int i = 0; i < a.length; i++) {
+			result[count[a[i] - min]] = a[i]; // Get the new position of a[i]
+			count[a[i] - min]++; // The next element at a[i] - min will be one after this one
+		}
+		
+		// Copy over the new results
+		for (int i = 0; i < result.length; i++) {
+			a[i] = result[i];
 		}
 	}
 }
