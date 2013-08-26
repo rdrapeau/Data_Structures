@@ -38,7 +38,7 @@ public class AdvancedGraph {
 			q.addAll(s.getEdges());
 			result.addVertex(convert.get(s));
 			
-			while (result.numberOfVertices() != g.numberOfEdges() && !q.isEmpty()) {
+			while (result.numberOfVertices() != g.numberOfVertices()) {
 				Edge e = q.remove();
 				if (!convert.containsKey(e.getHead()) || !convert.containsKey(e.getTail())) { // New Vertex Discovered
 					Vertex tail = e.getTail();
