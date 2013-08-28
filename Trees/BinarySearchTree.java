@@ -668,6 +668,41 @@ public class BinarySearchTree<E extends Comparable> {
 	}
 	
 	/**
+	 * Returns whether or not all the leaves in a tree are within an allowable difference in height
+	 * 
+	 * @param difference - Allowable difference
+	 * @return True if all the leaves are within the allowable difference and false otherwise
+	 */
+	public boolean sameLevelLeafs(int difference) {
+		int height = -1;
+		Node current = root;
+		while (current != null) {
+			height++;
+			current = current.left;
+		}
+		return sameLevelLeafs(difference, root, height, 0);
+	}
+	
+	/**
+	 * Returns whether or not all the leafs in a tree are within a height of a certain distance.
+	 * 
+	 * @param difference - Allowable difference in height
+	 * @param root - The root of the tree
+	 * @param leftHeight - The height of the farthest left Node
+	 * @param currentHeight - The height of the current Node
+	 * @return True if all the leaves are within the allowable difference and false otherwise
+	 */
+	private boolean sameLevelLeafs(int difference, Node root, int leftHeight, int currentHeight) {
+		if (root == null) {
+			return true;
+		} else if (isLeaf(root)) {
+			return Math.abs(leftHeight - currentHeight) <= difference;
+		}
+		return sameLevelLeafs(difference, root.left, leftHeight, currentHeight + 1) &&
+				sameLevelLeafs(difference, root.right, leftHeight, currentHeight + 1);
+	}
+	
+	/**
 	 * Returns the minimum depth in the tree.
 	 * 
 	 * @return The minimum height
