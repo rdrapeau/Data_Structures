@@ -61,4 +61,8 @@ public class Bucket implements Comparable<Bucket> {
 	public int compareTo(Bucket other) {
 		return this.sum - other.sum;
 	}
+	
+	public String toString() {
+		return Integer.toString(sum);
+	}
 }
