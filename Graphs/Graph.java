@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
@@ -166,6 +167,38 @@ public class Graph {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns a mapping of vertices to doubles where each entry represents the shortest path from s.
+	 * 
+	 * @param s - The starting Vertex
+	 * @return Shortest distances between s and every other vertex in the graph
+	 */
+	public Map<Vertex, Double> shortestPaths(Vertex s) {
+		Map<Vertex, Double> result = new HashMap<Vertex, Double>();
+		Queue<Vertex> q = new PriorityQueue<Vertex>(this.numberOfVertices());
+		for (Vertex v : vertices.values()) {
+			v.setMinimumLength(Double.MAX_VALUE);
+			q.add(v);
+		}
+		q.remove(s);
+		s.setMinimumLength(0);
+		q.add(s);
+		while (!q.isEmpty()) {
+			Vertex v = q.remove();
+			result.put(v, v.getMinimumLength());
+			for (Edge e : v.getEdges()) {
+				Vertex head = e.getHead();
+				double distance = e.getWeight() + v.getMinimumLength();
+				if (!result.containsKey(head) && head.getMinimumLength() > distance) {
+					q.remove(head);
+					head.setMinimumLength(distance);
+					q.add(head);
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
