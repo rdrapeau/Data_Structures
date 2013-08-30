@@ -253,4 +253,29 @@ public class StringsandArrays {
 		}
 		return next;
 	}
+	
+	/**
+	 * Returns the longest common substring between two Strings. 
+	 * 
+	 * @param haystack - First String
+	 * @param needle - Second String
+	 * @return The longest common substring between two Strings
+	 */
+	public static String longestCommonSubstring(String haystack, String needle) {
+		String common = "";
+		String[][] matrix = new String[2][needle.length()];
+		for (int i = 0; i < haystack.length(); i++) {
+			for (int j = 0; j < needle.length(); j++) {
+				if (haystack.charAt(i) == needle.charAt(j)) {
+					int row = i % 2;
+					// Add the results from the previous computation
+					matrix[row][j] = (j == 0 ? "" : matrix[(row == 0 ? 1 : 0)][j - 1]) + haystack.charAt(i);
+					if (matrix[row][j].length() > common.length()) {
+						common = matrix[row][j];
+					}
+				}
+			}
+		}
+		return common;
+	}
 }
