@@ -1,6 +1,9 @@
 package Algorithms;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Random practice from chapter 1 of Cracking the Coding Interview.
@@ -277,5 +280,64 @@ public class StringsandArrays {
 			}
 		}
 		return common;
+	}
+	
+	/**
+	 * Computes the edit distance required to make these two string equivalent.
+	 * 
+	 * @param word - First String
+	 * @param other - Second String
+	 * @param change - Cost to change a character
+	 * @param delete - Cost to delete a character
+	 * @param insert - Cost to insert a character
+	 * @return The minimum required edits
+	 */
+	public static int editDistance(String word, String other, int change, int delete, int insert) {
+		word = " " + word;
+		other = " " + other;
+		int[][] matrix = new int[word.length()][other.length()];
+		for (int row = 0; row < word.length(); row++) {		
+			matrix[row][0] = row * insert;
+		}
+		for (int col = 0; col < other.length(); col++) {
+			matrix[0][col] = col * delete;
+		}
+		int[] best = new int[3]; // [change, delete, insert]
+		for (int i = 1; i < word.length(); i++) {
+			for (int j = 1; j < other.length(); j++) {
+				best[0] = matrix[i - 1][j - 1] + (word.charAt(i) == other.charAt(j) ? 0 : change);
+				best[1] = matrix[i - 1][j] + delete;
+				best[2] = matrix[i][j - 1] + insert;
+				int min = best[0];
+				for (int k = 1; k < best.length; k++) {
+					if (best[k] < min) {
+						min = best[k];
+					}
+				}
+				matrix[i][j] = min;
+			}
+		}
+		return matrix[word.length() - 1][other.length() - 1];
+	}
+	
+	/**
+	 * Returns all the permutations of the String.
+	 * 
+	 * @param word - String to permute
+	 * @return A Set of permutations
+	 */
+	public static Set<String> permute(String word) {
+		Set<String> permutations = new HashSet<String>();	
+		if (word.length() <= 1) {
+			permutations.add(word);
+		} else {
+			Set<String> words = permute(word.substring(1));
+			for (String w : words) {
+				for (int i = 0; i <= w.length(); i++) {
+					permutations.add(w.substring(0, i) + word.charAt(0) + w.substring(i));
+				}
+			}
+		}
+		return permutations;
 	}
 }
