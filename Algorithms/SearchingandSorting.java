@@ -1,7 +1,6 @@
 package Algorithms;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -10,17 +9,6 @@ import Support.Person;
 
 public class SearchingandSorting {
 	private static final Random r = new Random();
-	
-	public static void main(String[] args) {
-		int[] a = new int[10000000];
-		for (int i = 0; i < a.length; i++) {
-			a[i] = r.nextInt(a.length);
-		}
-		long start = System.currentTimeMillis();
-		sort(a);
-		long end = System.currentTimeMillis();
-		System.out.println(end - start);
-	}
 
 	/**
 	 * Merges two sorted arrays into a. Assumes that there are a.length elements in total
@@ -441,6 +429,53 @@ public class SearchingandSorting {
 		
 		// Copy over the new results
 		for (int i = 0; i < result.length; i++) {
+			a[i] = result[i];
+		}
+	}
+	
+	/**
+	 * Sorts the input array using radix sort with a modified counting sort subroutine.
+	 * 
+	 * @param a - Array to sort
+	 */
+	public static void radixSort(int[] a) {
+		if (a != null && a.length > 1) {
+			int max = a[0];
+			for (int i : a) {
+				if (i > max) {
+					max = i;
+				}
+			}
+			for (int place = 1; max / place > 0; place *= 10) {
+				subSort(a, place);
+			}
+		}
+	}
+	
+	/**
+	 * Sorts a by the digit in certain place.
+	 * 
+	 * @param a - The array to sort
+	 * @param place - Digit to sort on
+	 */
+	private static void subSort(int[] a, int place) {
+		int[] count = new int[10];
+		for (int i : a) {
+			count[(i / place) % 10]++;
+		}
+		int sum = 0;
+		for (int i = 0; i < 10; i++) {
+			int temp = count[i];
+			count[i] = sum;
+			sum += temp;
+		}
+		int[] result = new int[a.length];
+		for (int i = 0; i < a.length; i++) {
+			int digit = (a[i] / place) % 10;
+			result[count[digit]] = a[i];
+			count[digit]++;
+		}
+		for (int i = 0; i < a.length; i++) {
 			a[i] = result[i];
 		}
 	}
