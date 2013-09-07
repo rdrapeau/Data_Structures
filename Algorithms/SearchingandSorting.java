@@ -479,4 +479,8 @@ public class SearchingandSorting {
 			a[i] = result[i];
 		}
 	}
+	
+	public static Pair closestPair(int[] a) {
+		
+	}
 }
