@@ -480,7 +480,30 @@ public class SearchingandSorting {
 		}
 	}
 	
-	public static Pair closestPair(int[] a) {
-		
+	/**
+	 * Returns the distance between the two closest integers in a and b.
+	 * 
+	 * @param a - First sorted array
+	 * @param b - Second sorted array
+	 * @return The smallest distance between two integers in a and b
+	 */
+	public static int closestPair(int[] a, int[] b) {
+		int bestDistance = Integer.MAX_VALUE;
+		int aIndex = 0;
+		int bIndex = 0;
+		while (aIndex < a.length || bIndex < b.length) {
+			int aCompare = aIndex < a.length ? a[aIndex] : a[a.length - 1];
+			int bCompare = bIndex < b.length ? b[bIndex] : b[b.length - 1];
+			int distance = (int) Math.abs(aCompare - bCompare);
+			if (distance < bestDistance) {
+				bestDistance = distance;
+			}
+			if (aIndex < a.length && (aCompare < bCompare || bIndex >= a.length)) {
+				aIndex++;
+			} else {
+				bIndex++;
+			}
+		}
+		return bestDistance;
 	}
 }
