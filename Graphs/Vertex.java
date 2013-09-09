@@ -155,7 +155,7 @@ public class Vertex implements Comparable {
 	}
 	
 	public String toString() {
-		return id + ": " + edges;
+		return id + "";
 	}
 
 	public int compareTo(Object other) {

@@ -75,6 +75,19 @@ public class Graph {
 	}
 
 	/**
+	 * Returns a list of vertices in the graph.
+	 * 
+	 * @return A list of vertices
+	 */
+	public List<Vertex> getVertices() {
+		List<Vertex> nodes = new ArrayList<Vertex>();
+		for (Vertex v : this.vertices.values()) {
+			nodes.add(v);
+		}
+		return nodes;
+	}
+	
+	/**
 	 * Adds the edge into the list of all the edges in the graph.
 	 * 
 	 * @throws IllegalArgumentException if e is null
@@ -99,6 +112,15 @@ public class Graph {
 			throw new ArrayIndexOutOfBoundsException("Index is out of bounds. Size: " + this.edges.size() + ", Index: " + index);
 		}
 		return this.edges.remove(index);
+	}
+	
+	/**
+	 * Returns a list of all the edges.
+	 * 
+	 * @return A list of all edges
+	 */
+	public List<Edge> getEdges() {
+		return this.edges;
 	}
 	
 	/**
