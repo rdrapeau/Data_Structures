@@ -1,5 +1,6 @@
 package Advanced;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +17,22 @@ public class DisjointSet<E> {
 	private Map<E, Node> convert; 
 	
 	/**
-	 * Constructs a new DisjointSet
+	 * Constructs a new DisjointSet.
 	 */
 	public DisjointSet() {
+		this(null);
+	}
+	
+	/**
+	 * Constructs a new DisjointSet over the data.
+	 */
+	public DisjointSet(Collection<E> data) {
 		convert = new HashMap<E, Node>();
+		if (data != null) {
+			for (E datum : data) {
+				convert.put(datum, new Node());
+			}
+		}
 	}
 	
 	/**
