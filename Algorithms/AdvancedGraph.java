@@ -1,11 +1,16 @@
 package Algorithms;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 
+import Advanced.DisjointSet;
 import Graphs.Edge;
 import Graphs.Graph;
 import Graphs.Vertex;
@@ -27,7 +32,7 @@ public class AdvancedGraph {
 	 * @param g - The connected undirected acyclic graph
 	 * @return The minimum spanning tree for the graph
 	 */
-	public Graph minSpanTree(Graph g) {
+	public static Graph minSpanTree(Graph g) {
 		Graph result = new Graph();
 		if (g.numberOfVertices() > 0) {
 			Map<Vertex, Vertex> convert = new HashMap<Vertex, Vertex>();
@@ -68,7 +73,7 @@ public class AdvancedGraph {
 	 * @param tail - The tail of the edge
 	 * @param head - The head of the edge
 	 */
-	private void update(Map<Vertex, Vertex> convert, Queue<Edge> q, Graph result, Vertex tail, Vertex head) {
+	private static void update(Map<Vertex, Vertex> convert, Queue<Edge> q, Graph result, Vertex tail, Vertex head) {
 		if (!convert.containsKey(tail)) { /// Doesn't contain tail
 			q.addAll(tail.getEdges());
 			convert.put(tail, new Vertex(tail.getID()));
@@ -78,5 +83,40 @@ public class AdvancedGraph {
 			convert.put(head, new Vertex(head.getID()));
 			result.addVertex(convert.get(head));
 		}
+	}
+	
+	/**
+	 * Returns a mapping of each vertex to its clustered component in the graph using Single-Link
+	 * clustering into k clusters.
+	 * 
+	 * @param g - The graph
+	 * @param k - The number of desired clusters
+	 * @return A mapping of each Vertex to its cluster
+	 */
+	public static Map<Vertex, Set<Vertex>> cluster(Graph g, int k) {
+		Map<Vertex, Set<Vertex>> result = new HashMap<Vertex, Set<Vertex>>();
+		DisjointSet<Vertex> components = new DisjointSet<Vertex>(g.getVertices());
+		List<Edge> edges = g.getEdges();
+		
+		for (Vertex v : g.getVertices()) {
+			Set<Vertex> cluster = new HashSet<Vertex>();
+			cluster.add(v);
+			result.put(v, cluster);
+		}
+		Collections.sort(edges);
+		
+		int i = 0;
+		int size = g.numberOfVertices();
+		while (i < edges.size() && size > k) {
+			Edge e = edges.get(i++);
+			if (!components.find(e.getTail(), e.getHead())) {
+				components.union(e.getTail(), e.getHead());
+				Set<Vertex> a = result.get(e.getTail());
+				a.addAll(result.get(e.getHead()));
+				result.put(e.getHead(), a);
+				size--;
+			}
+		}
+		return result;
 	}
 }
