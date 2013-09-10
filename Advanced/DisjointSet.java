@@ -86,6 +86,7 @@ public class DisjointSet<E> {
 	private Node root(Node child) {
 		if (child != null) {
 			while (child.parent != child) { // Move up the tree
+				child.parent.rank--; // Update Rank
 				child.parent = child.parent.parent; // Collapse tree
 				child = child.parent;
 			}
