@@ -117,6 +117,7 @@ public class AdvancedGraph {
 				size--;
 			}
 		}
+		System.out.println(i < edges.size() ? edges.get(i) : "Connected");
 		return result;
 	}
 }
