@@ -51,7 +51,7 @@ public class SearchingandSorting {
 	 */
 	private static int rotatedBinarySearch(int[] a, int find, int min, int max) {
 		if (max > min) {
-			int mid = (max + min) / 2;
+			int mid = min + (max - min) / 2;
 			if (a[mid] == find) {
 				return mid;
 			} else if (a[mid] > find && a[min] <= find || (a[mid] < find && a[max - 1] < find)) {
@@ -111,8 +111,7 @@ public class SearchingandSorting {
 		heapify(a);
 		int last = a.length - 1;
 		for (int i = 0; i < a.length; i++) {
-			a[last] = extractMax(a, last);
-			last--;
+			a[last--] = extractMax(a, last);
 		}
 	}
 	
