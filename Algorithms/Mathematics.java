@@ -157,6 +157,12 @@ public class Mathematics {
 		return primes;
 	}
 	
+	/**
+	 * Returns whether or not the number is prime.
+	 * 
+	 * @param number - The number to test
+	 * @return True if the number is prime and false otherwise
+	 */
 	public static boolean isPrime(int number) {
 		if (number % 2 == 0) return false;
 		for (int i = 3; i < Math.sqrt(number); i += 2) {
@@ -165,7 +171,28 @@ public class Mathematics {
 		return true;
 	}
 	
-	public static void main(String[] args) {
-		
+	public static boolean fermat(int number) {
+		for (int i = 1; i < 25; i++) {
+			if (!fermat(number, i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean fermat(int number, int base) {
+		return pow(base, number - 1) % number == 1;
+	}
+	
+	public static double pow(double base, int exp) {
+		if (exp == 0) {
+			return 1;
+		} else if (exp < 0) {
+			return 1 / pow(base, exp * -1);
+		} else if (exp == 1) {
+			return base;
+		}
+		double half = pow(base, exp / 2);
+		return half * half * pow(base, exp % 2);		
 	}
 }
