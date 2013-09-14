@@ -6,6 +6,7 @@ In order to prep for the upcoming intern hunting season, I have implemented vari
 Implemented:
 ============
 * ArrayList - using the basic array
+* SortedList - BST usually performs better
 * SinglyLinkedList
 * DoublyLinkedList
 * Queue - using the basic array
