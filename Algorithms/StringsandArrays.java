@@ -2,7 +2,6 @@ package Algorithms;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -339,5 +338,27 @@ public class StringsandArrays {
 			}
 		}
 		return permutations;
+	}
+	
+	/**
+	 * Returns the pivot in the rotated sorted array.
+	 * 
+	 * @param a - The array
+	 * @return The index of the pivot
+	 */
+	public static int findPivot(int[] a) {
+		int left = 0;
+		int right = a.length;
+		while (left < right) {
+			int middle = left + (right - left) / 2;
+			if ((middle == a.length - 1 || a[middle] < a[middle + 1]) && (middle == 0 || a[middle] < a[middle - 1])) {
+				return middle;
+			} else if (a[middle] > a[left] && a[middle] <= a[right - 1] || a[middle] < a[left] && a[middle] <= a[right - 1]) {
+				right = middle;
+			} else {
+				left = middle + 1;
+			}
+		}
+		return -1;
 	}
 }
