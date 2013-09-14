@@ -1,15 +1,13 @@
 package Algorithms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Mathematics {
-	public static void main(String[] args) {
-		int[] a = {1, 2, 3, 4, 5, 6};
-		System.out.println(threeSum(a, 15));
-	}
-
 	/**
 	 * Returns the greatest common divisor between two numbers.
 	 * 
@@ -135,5 +133,25 @@ public class Mathematics {
 			}
 		}
 		return false;
+	}
+	
+	public static List<Integer> getPrimes(int limit) {
+		List<Integer> primes = new ArrayList<Integer>();
+		BitSet numbers = new BitSet(limit);
+		for (int i = 2; i < limit; i++) {
+			for (int j = i; j < limit; j += j) {
+				numbers.set(j);
+			}
+		}
+		for (int i = 0; i < limit; i++) {
+			if (numbers.get(i)) {
+				primes.add(i);
+			}
+		}
+		return primes;
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 }
