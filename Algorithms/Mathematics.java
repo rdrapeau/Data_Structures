@@ -171,19 +171,23 @@ public class Mathematics {
 		return true;
 	}
 	
+	/**
+	 * Returns whether or not a number is prime based on fermats little theorem.
+	 * 
+	 * @param number - The number to test
+	 * @return True if the number is prime or a carmichael number and false otherwise
+	 */
 	public static boolean fermat(int number) {
-		for (int i = 1; i < 25; i++) {
-			if (!fermat(number, i)) {
-				return false;
-			}
-		}
-		return true;
+		return pow(2, number - 1) % number == 1;
 	}
 	
-	public static boolean fermat(int number, int base) {
-		return pow(base, number - 1) % number == 1;
-	}
-	
+	/**
+	 * Computes the base raised to the exp power.
+	 * 
+	 * @param base - The base of the exponent
+	 * @param exp - The exponent
+	 * @return The result of base to the exponent power
+	 */
 	public static double pow(double base, int exp) {
 		if (exp == 0) {
 			return 1;
