@@ -135,20 +135,34 @@ public class Mathematics {
 		return false;
 	}
 	
+	/**
+	 * Returns a list of primes under the limit.
+	 * 
+	 * @param limit - The maximum number (exclusive)
+	 * @return A list of primes below the limit
+	 */
 	public static List<Integer> getPrimes(int limit) {
 		List<Integer> primes = new ArrayList<Integer>();
-		BitSet numbers = new BitSet(limit);
+		BitSet numbers = new BitSet(limit);		
 		for (int i = 2; i < limit; i++) {
-			for (int j = i; j < limit; j += j) {
+			for (int j = i + i; j < limit; j += i) {
 				numbers.set(j);
 			}
 		}
-		for (int i = 0; i < limit; i++) {
-			if (numbers.get(i)) {
+		for (int i = 2; i < limit; i++) {
+			if (!numbers.get(i)) {
 				primes.add(i);
 			}
 		}
 		return primes;
+	}
+	
+	public static boolean isPrime(int number) {
+		if (number % 2 == 0) return false;
+		for (int i = 3; i < Math.sqrt(number); i += 2) {
+			if (number % i == 0) return false;
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) {
