@@ -361,4 +361,63 @@ public class StringsandArrays {
 		}
 		return -1;
 	}
+	
+	/**
+	 * Returns an array of row, col entries for the words in the grid.
+	 * 
+	 * @param grid - The word search to use
+	 * @param words - The words to search for
+	 * @return Array of row, col for each word in words (null if it is not in the grid)
+	 */
+	public static String[] find(String[] grid, String[] words) {
+		String[] results = new String[words.length];
+		for (int i = 0; i < words.length; i++) {
+			results[i] = find(grid, words[i], 0, 0, 0);
+		}
+		return results;
+	}
+	
+	/**
+	 * Returns the first index of the word in the grid as if the grid were a word find.
+	 * 
+	 * @param grid - The grid of words to search through
+	 * @param word - The word to search for
+	 * @param index - The current index in the word
+	 * @param row - The current row of the puzzle
+	 * @param col - The current column of the puzzle
+	 * @return The row and col of the first matching letter in the matching sequence
+	 */
+	private static String find(String[] grid, String word, int index, int row, int col) {
+		if (index == word.length()) return row + " " + col;
+		String result = null;
+		if (row < grid.length && col < grid[row].length()) { // In bounds
+			if (word.charAt(index) == grid[row].charAt(col)) { // Matching letter
+				boolean right = col + word.length() - index - 1 < grid[row].length();
+				boolean down = row + word.length() - index - 1 < grid.length;
+				index++;
+				if (right) {
+					result = find(grid, word, index, row, col + 1); // Check right
+				}
+				if (result == null && down) {
+					result = find(grid, word, index, row + 1, col); // Check down
+				}
+				if (result == null && down && right) {
+					result = find(grid, word, index, row + 1, col + 1); // Check down right
+				}
+				if (result != null) {
+					result = row + " " + col; // Return the starting indices
+				} else {
+					index = 0; // Reset back to the beginning
+				}
+			} 
+			if (index == 0) { // If back at the beginning
+				if (col + 1 < grid[row].length()) {
+					result = find(grid, word, index, row, col + 1);
+				} else if (result == null && row + 1 < grid.length) {
+					result = find(grid, word, index, row + 1, 0);
+				}
+			}
+		}
+		return result;
+	}
 }
