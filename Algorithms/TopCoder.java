@@ -1,10 +1,6 @@
 package Algorithms;
 
 public class TopCoder {
-	public static void main(String[] args) {
-		System.out.println(birthdayOdds(84, 9227));
-	}
-	
 	/**
 	 * Returns the number of people required to be in the room in order to guarantee that there is
 	 * at least a targetPercent chance that two or more have the same birthday.
