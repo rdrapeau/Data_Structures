@@ -282,7 +282,7 @@ public class StringsandArrays {
 	}
 	
 	/**
-	 * Computes the edit distance required to make these two string equivalent.
+	 * Computes the edit distance required to make these two strings equivalent.
 	 * 
 	 * @param word - First String
 	 * @param other - Second String

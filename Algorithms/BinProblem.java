@@ -16,7 +16,7 @@ import Support.Bucket;
 public class BinProblem {
 	public static void main(String[] args) {
 		int[] jobs = {1, 1, 2, 3, 5, 4, 2, 3, 2, 1};
-		System.out.println(packBuckets(jobs, 11));
+		System.out.println(distribute(jobs, 7));
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class BinProblem {
 	}
 	
 	/**
-	 * Packs items into bins of capacity - creating new ones when needed.
+	 * Packs items into bins of size capacity - creating new ones when needed.
 	 * 
 	 * @param items - Items to pack
 	 * @param capacity - Capacity of each bin
