@@ -1,7 +1,9 @@
 package Algorithms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -416,6 +418,31 @@ public class StringsandArrays {
 				} else if (result == null && row + 1 < grid.length) {
 					result = find(grid, word, index, row + 1, 0);
 				}
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Returns the maximum weighted independent set of a.
+	 * 
+	 * @param a - The weights of each vertex
+	 * @return The maximum independent set
+	 */
+	public static List<Integer> weightedIndependentSet(int[] a) {
+		int[] max = new int[a.length + 1];
+		max[1] = a[0];
+		for (int i = 2; i <= a.length; i++) {
+			max[i] = Math.max(max[i - 1], max[i - 2] + a[i - 1]);
+		}
+		List<Integer> result = new ArrayList<Integer>();
+		for (int i = max.length - 1; i > 1; i--) {
+			if (max[i - 2] + a[i - 1] >= max[i - 1]) {
+				result.add(a[i - 1]);
+				i--;
+			} 
+			if (i == 2) {
+				result.add(a[0]);
 			}
 		}
 		return result;
