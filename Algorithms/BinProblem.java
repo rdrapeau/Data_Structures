@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import Support.Bucket;
+import Support.Item;
 
 /**
  * Given N jobs and K people - balance the work load so that each person has a similar load of work.
@@ -15,8 +16,11 @@ import Support.Bucket;
  */
 public class BinProblem {
 	public static void main(String[] args) {
-		int[] jobs = {1, 1, 2, 3, 5, 4, 2, 3, 2, 1};
-		System.out.println(distribute(jobs, 7));
+		Item[] items = new Item[3];
+		items[0] = new Item(1, 1);
+		items[1] = new Item(2, 2);
+		items[2] = new Item(3, 3);
+		System.out.println(knapSack(items, 2));
 	}
 
 	/**
@@ -71,5 +75,20 @@ public class BinProblem {
 			}
 		}
 		return buckets;
+	}
+	
+	public static int knapSack(Item[] items, int capacity) {
+		int[][] matrix = new int[items.length + 1][capacity + 1];
+		for (int row = 1; row < matrix.length; row++) {
+			Item i = items[row - 1];
+			for (int col = 1; col < matrix[row].length; col++) { // Non-zero sizes
+				if (col >= i.getSize()) { // Nonnegative
+					matrix[row][col] = Math.max(matrix[row - 1][col], matrix[row - 1][col - i.getSize()] + i.getValue());
+				} else {
+					matrix[row][col] = matrix[row - 1][col];
+				}
+			}
+		}
+		return matrix[items.length][capacity];
 	}
 }
