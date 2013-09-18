@@ -424,7 +424,7 @@ public class StringsandArrays {
 	}
 	
 	/**
-	 * Returns the maximum weighted independent set of a.
+	 * Returns the maximum weighted independent set of the integer array.
 	 * 
 	 * @param a - The weights of each vertex
 	 * @return The maximum independent set
