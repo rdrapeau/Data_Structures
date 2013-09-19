@@ -77,6 +77,13 @@ public class BinProblem {
 		return buckets;
 	}
 	
+	/**
+	 * Returns the optimal subset of items to pack that maximizes the value of everything.
+	 * 
+	 * @param items - The list of items to pack
+	 * @param capacity - The size of the container
+	 * @return A list of optimal items to put into the container
+	 */
 	public static int knapSack(Item[] items, int capacity) {
 		int[][] matrix = new int[items.length + 1][capacity + 1];
 		for (int row = 1; row < matrix.length; row++) {
