@@ -20,7 +20,7 @@ public class BinProblem {
 		items[0] = new Item(1, 1);
 		items[1] = new Item(2, 2);
 		items[2] = new Item(3, 3);
-		System.out.println(knapSack(items, 2));
+		System.out.println(knapSack(items, 6));
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class BinProblem {
 	 * @param capacity - The size of the container
 	 * @return A list of optimal items to put into the container
 	 */
-	public static int knapSack(Item[] items, int capacity) {
+	public static List<Item> knapSack(Item[] items, int capacity) {
 		int[][] matrix = new int[items.length + 1][capacity + 1];
 		for (int row = 1; row < matrix.length; row++) {
 			Item i = items[row - 1];
@@ -96,6 +96,16 @@ public class BinProblem {
 				}
 			}
 		}
-		return matrix[items.length][capacity];
+		int row = items.length;
+		int col = capacity;
+		List<Item> result = new ArrayList<Item>();
+		while (row > 0 && col > 0 && matrix[row][col] != 0) { // Reconstruct
+			if (matrix[row - 1][col] != matrix[row][col]) {
+				result.add(items[row - 1]);
+				col -= items[row - 1].getSize();
+			}
+			row--;
+		}
+		return result;
 	}
 }
