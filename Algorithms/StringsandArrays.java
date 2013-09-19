@@ -447,4 +447,54 @@ public class StringsandArrays {
 		}
 		return result;
 	}
+	
+	/**
+	 * Computes the Needleman-Wunsch Score for the two strings.
+	 * 
+	 * @param a - First String
+	 * @param b - Second String
+	 * @param change - Penalty for changing a character
+	 * @param gap - Penalty for inserting a gap
+	 * @param reconstruct - Whether to print out the reconstruction or not
+	 * @return The needleman-wunsch score
+	 */
+	public static int needlemanWunsch(String a, String b, int change, int gap, boolean reconstruct) {
+		int[][] matrix = new int[a.length() + 1][b.length() + 1];
+		for (int row = 0; row < matrix.length; row++) {
+			matrix[row][0] = row * gap;
+		}
+		for (int col = 0; col < matrix[0].length; col++) {
+			matrix[0][col] = col * gap;
+		}
+		for (int row = 1; row < matrix.length; row++) {
+			for (int col = 1; col < matrix[row].length; col++) {
+				int match = matrix[row - 1][col - 1] + (a.charAt(row - 1) == b.charAt(col - 1) ? 0 : change);
+				int gapA = matrix[row - 1][col] + gap;
+				int gapB = matrix[row][col - 1] + gap;
+				matrix[row][col] = Math.min(match, Math.min(gapA, gapB));
+			}
+		}
+		if (reconstruct) {
+			int row = a.length();
+			int col = b.length();
+			while (row > 0 && col > 0) {
+				if (matrix[row - 1][col - 1] + change == matrix[row][col]) {
+					row--;
+					col--;
+				} else if (matrix[row - 1][col] + gap == matrix[row][col]) {
+					b = b.substring(0, col) + "_" + b.substring(col, b.length());
+					row--;
+				} else if (matrix[row][col - 1] + gap == matrix[row][col]) {
+					a = a.substring(0, row) + "_" + a.substring(row, a.length());
+					col--;
+				} else {
+					row--;
+					col--;
+				}
+			}
+			System.out.println(a);
+			System.out.println(b);
+		}
+		return matrix[matrix.length - 1][matrix[0].length - 1];
+	}
 }
