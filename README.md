@@ -1,8 +1,5 @@
 Data_Structures
 ===============
-
-In order to prep for the upcoming intern hunting season, I have implemented various elementary data structures as practice.
-
 Implemented:
 ============
 * ArrayList - using the basic array
