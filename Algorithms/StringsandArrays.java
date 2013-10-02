@@ -2,8 +2,10 @@ package Algorithms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -496,5 +498,26 @@ public class StringsandArrays {
 			System.out.println(b);
 		}
 		return matrix[matrix.length - 1][matrix[0].length - 1];
+	}
+	
+	/**
+	 * Returns the first integer array that sums to 0.
+	 * 
+	 * @param a - The integer array
+	 * @return The first integer array that sums to 0
+	 */
+	public static int[] zeroSum(int [] a) {
+		Map<Integer, Integer> done = new HashMap<Integer, Integer>();
+		int curSum = 0;
+		for (int i = 0; i < a.length; i++) {
+			curSum += a[i];
+			if (done.containsKey(curSum)) {
+				return Arrays.copyOfRange(a, done.get(curSum) + 1, i + 1);
+			} else if (curSum == 0) {
+				return Arrays.copyOfRange(a, 0, i + 1);
+			}
+			done.put(curSum, i);
+		}
+		return null;
 	}
 }
