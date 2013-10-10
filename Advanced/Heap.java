@@ -6,11 +6,11 @@ package Advanced;
  *
  * @param <E>
  */
-public class Heap<E extends Comparable> {
+public class Heap<E extends Comparable<E>> {
 	/**
 	 * Elements of the heap.
 	 */
-	private Object[] elements;
+	private E[] elements;
 	
 	/**
 	 * True if the Heap returns the minimum and false if it returns the maximum.
@@ -28,8 +28,9 @@ public class Heap<E extends Comparable> {
 	 * @param size - The number of elements in the heap
 	 * @param isMinHeap - True if the Heap will return the minimum and false otherwise
 	 */
+	@SuppressWarnings("unchecked")
 	public Heap(int size, boolean isMinHeap) {
-		this.elements = new Object[size];
+		this.elements = (E[]) new Object[size];
 		this.isMinHeap = isMinHeap;
 	}
 	
@@ -47,8 +48,8 @@ public class Heap<E extends Comparable> {
 		elements[index] = element;
 		int parent = getParentIndex(index);
 		while (index != 0 
-				&& ((isMinHeap && ((E) elements[index]).compareTo((E) elements[parent]) < 0)
-						|| (!isMinHeap && ((E) elements[index]).compareTo((E) elements[parent]) > 0))) { // Bubble Up
+				&& ((isMinHeap && (elements[index]).compareTo(elements[parent]) < 0)
+						|| (!isMinHeap && (elements[index]).compareTo(elements[parent]) > 0))) { // Bubble Up
 			swap(index, parent);
 			index = parent;
 			parent = getParentIndex(index);
@@ -65,14 +66,14 @@ public class Heap<E extends Comparable> {
 		if (size == 0) {
 			throw new IllegalStateException();
 		}
-		E root = (E) elements[0];
+		E root =  elements[0];
 		elements[0] = elements[--size];
 		elements[size] = null;
 		int index = 0;
 		int child = getIndexOfChild(index);
 		while (child < size 
-				&& ((isMinHeap && ((E) elements[index]).compareTo((E) elements[child]) > 0)
-						|| (!isMinHeap && ((E) elements[index]).compareTo((E) elements[child]) < 0))) { // Bubble down
+				&& ((isMinHeap && (elements[index]).compareTo(elements[child]) > 0)
+						|| (!isMinHeap && (elements[index]).compareTo(elements[child]) < 0))) { // Bubble down
 			swap(index, child);
 			index = child;
 			child = getIndexOfChild(index);
@@ -90,7 +91,7 @@ public class Heap<E extends Comparable> {
 		if (size == 0) {
 			throw new IllegalStateException();
 		}
-		return (E) elements[0];
+		return  elements[0];
 	}
 	
 	/**
@@ -113,7 +114,7 @@ public class Heap<E extends Comparable> {
 		if (index < 0 || other < 0 || index >= size || other >= size) {
 			throw new IllegalArgumentException();
 		}
-		Object temp = elements[index];
+		E temp = elements[index];
 		elements[index] = elements[other];
 		elements[other] = temp;
 	}
@@ -132,8 +133,8 @@ public class Heap<E extends Comparable> {
 			return size + 1;
 		}
 		if (elements[first] == null || (elements[second] != null 
-				&& ((isMinHeap && ((E) elements[first]).compareTo((E) elements[second]) > 0)
-						|| (!isMinHeap && ((E) elements[first]).compareTo((E) elements[second]) < 0)))) {
+				&& ((isMinHeap && ( elements[first]).compareTo( elements[second]) > 0)
+						|| (!isMinHeap && (elements[first]).compareTo(elements[second]) < 0)))) {
 			return second;
 		} else {
 			return first;
