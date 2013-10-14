@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Random practice from chapter 1 of Cracking the Coding Interview.
@@ -519,5 +520,29 @@ public class StringsandArrays {
 			done.put(curSum, i);
 		}
 		return null;
+	}
+	
+	/**
+	 * Removes all adjacent duplicates from a String.
+	 */
+	public static String removeAdjacentDuplicates(String seq) {
+		if (seq.isEmpty())
+			return "";
+		boolean edit = true;
+		while (edit) {
+			edit = false;
+			for (int i = 0; i < seq.length(); i++) {
+				int index = i + 1;
+				while (index < seq.length() && seq.charAt(i) == seq.charAt(index)) {
+					index++;
+				}
+				if (index > i + 1) {
+					edit = true;
+					seq = seq.substring(0, i) + seq.substring(index);
+					i--;
+				}
+			}
+		}
+		return seq;
 	}
 }
