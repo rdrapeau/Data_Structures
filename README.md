@@ -1,7 +1,6 @@
 Data_Structures
 ===============
 Note: These were all done when I was learning Algorithms and Data Structures and are not guaranteed to be correct. These were merely done to help improve my programming and ADT skills. 
-
 Implemented:
 ============
 * ArrayList - using the basic array
